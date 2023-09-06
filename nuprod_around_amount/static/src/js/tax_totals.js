@@ -47,9 +47,9 @@ patch(TaxTotalsComponent.prototype, "nuprodFormatData", {
 		);
 		let last_digit = (amount_total_converted * 1000) % 10;
 		if (last_digit !== 0) {
-			amount_to_around = last_digit;
+			amount_to_around = 10 - last_digit;
 			totals.formatted_amount_total = formatMonetary(
-				amount_total_converted - amount_to_around / 1000,
+				amount_total_converted + amount_to_around / 1000,
 				currencyFmtOpts
 			);
 		}
@@ -64,7 +64,7 @@ patch(TaxTotalsComponent.prototype, "nuprodFormatData", {
 					formated_tax.replace(",", "").replace(" €", "")
 				);
 				let new_formated_tax =
-					formated_tax_converted - amount_to_around / 1000;
+					formated_tax_converted + amount_to_around / 1000;
 				group[key].formatted_tax_group_amount = formatMonetary(
 					new_formated_tax,
 					currencyFmtOpts

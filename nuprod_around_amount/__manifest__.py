@@ -3,11 +3,12 @@
     'name': "nuprod_around_amount",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Module to modify total_amount and tax_amount in sale_order.py and tax_total.js,
+        the goal is to get these amounts with wthe third decimal rounded to the next tenth""",
 
     'description': """
-        Long description of module's purpose
+       Module to modify total_amount and tax_amount in sale_order.py and tax_total.js,
+       the goal is to get these amounts with wthe third decimal rounded to the next tenth
     """,
 
     'author': "NUprod",
@@ -25,8 +26,8 @@
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/templates.xml',
+        # 'views/views.xml',
+        # 'views/templates.xml',
     ],
     'assets': {
         'web.assets_backend': [
