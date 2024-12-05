@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="geodis_delivery_carrier_configuration_form" model="ir.ui.view">
+        <field name="name">GEODIS Carrier Configuration</field>
+        <field name="model">delivery.carrier</field>
+        <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='destination']" position='before'>
+                <page string="GEODIS Configuration" name="geodis_configuration"
+                      invisible="delivery_type != 'geodis'">
+                    <group>
+                        <group>
+                            <field name="company_id"
+                                   required="delivery_type == 'geodis'"/>
+                            <field name="geodis_package_id"
+                                   required="delivery_type == 'geodis'"/>
+                            <field name="suppression_validation"
+                                   required="delivery_type == 'geodis'"/>
+                            <field name="product_code" placeholder="Enter Product Code Like ENL,MES,MEI"
+                                   required="delivery_type == 'geodis'"/>
+                            <field name="format_etiquette"
+                                   required="delivery_type == 'geodis'"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

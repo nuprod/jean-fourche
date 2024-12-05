@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="geodis_credential_configuration" model="ir.ui.view">
+        <field name="name">GEODIS Configuration</field>
+        <field name="model">res.company</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[last()]" position="after">
+                <page string="GEODIS Configuration">
+                    <group>
+                        <field name="use_geodis_shipping_provider"/>
+                    </group>
+                    <group>
+                        <group invisible="use_geodis_shipping_provider != True" >
+
+                            <field name="geodis_api_url"
+                                   required="use_geodis_shipping_provider != False"/>
+                            <field name="geodis_id"
+                                   required="use_geodis_shipping_provider != False"/>
+                            <field name="geodis_api_key"
+                                   required="use_geodis_shipping_provider != False"/>
+                            <field name="agency_code" placeholder="To be completed with 0 in front, to reach 6 numeric "
+                                   required="use_geodis_shipping_provider != False"/>
+                            <field name="customer_account" placeholder="To be completed with 0 in front, to reach 6 numeric"
+                                   required="use_geodis_shipping_provider != False"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
