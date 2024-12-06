@@ -1,0 +1,24 @@
+<!-- <template id="auth_signup.login" inherit_id="web.login" name="Sign up - Reset Password">
+    <xpath expr="//button[@type='submit']" position="after">
+        <div class="justify-content-between mt-2 d-flex small">
+            <a t-if="signup_enabled" t-attf-href="/web/signup?{{ keep_query() }}">Don't
+                have an account?</a>
+            <a t-if="reset_password_enabled"
+                t-attf-href="/web/reset_password?{{ keep_query() }}">Reset Password</a>
+        </div>
+    </xpath>
+</template> -->
+
+<odoo>
+    <template id="auth_signup_login_custom" inherit_id="auth_signup.login"
+        name="Custom Sign up - Reset Password">
+        <xpath expr="//a[@t-attf-href='/web/signup?{{ keep_query() }}']" position="replace">
+            <a t-if="signup_enabled" t-attf-href="https://www.youtube.com/watch?v=DHdIJenXysY">Don't
+                have an account?</a>
+        </xpath>
+        <xpath expr="//a[@t-attf-href='/web/reset_password?{{ keep_query() }}']" position="replace">
+            <a t-if="reset_password_enabled"
+                t-attf-href="/web/custom_reset_password_page?{{ keep_query() }}">Reset Password</a>
+        </xpath>
+    </template>
+</odoo>
