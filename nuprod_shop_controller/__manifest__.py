@@ -9,8 +9,11 @@
     'version': '17.0.1.0',
     'category': 'Uncategorized',
     'depends': ['base', 'website_sale'],
-    'data': [], 
+    'data': [
+        'views/portal_templates_view.xml',
+        'views/auth_signup_login_templates_view.xml'
+    ], 
     'installable': True,  
-    'application': True, 
+    'application': False, 
     'auto_install': False,
 }
