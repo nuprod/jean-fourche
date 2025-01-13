@@ -12,8 +12,12 @@
     'data': [
         'views/portal_templates_view.xml',
         'views/auth_signup_login_templates_view.xml',
-        'static/src/css/shop.css',
     ], 
+    'assets': {
+        'web.assets_frontend': [
+            'nuprod_shop_controller/static/src/css/*.css',
+        ],
+    },
     'installable': True,  
     'application': False, 
     'auto_install': False,
