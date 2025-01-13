@@ -13,7 +13,7 @@
     <template id="auth_signup_login_custom" inherit_id="auth_signup.login"
         name="Custom Sign up - Reset Password">
         <xpath expr="//a[@t-attf-href='/web/signup?{{ keep_query() }}']" position="replace">
-            <a t-if="signup_enabled" t-attf-href="https://www.youtube.com/watch?v=DHdIJenXysY">Don't
+            <a t-if="signup_enabled" t-attf-href="https://jean-fourche-dev.odoo.com/test-formulaire">Don't
                 have an account?</a>
         </xpath>
         <xpath expr="//a[@t-attf-href='/web/reset_password?{{ keep_query() }}']" position="replace">
