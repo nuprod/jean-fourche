@@ -12,6 +12,7 @@
     'data': [
         'views/portal_templates_view.xml',
         'views/auth_signup_login_templates_view.xml'
+        'static/src/css/*.css',
     ], 
     'installable': True,  
     'application': False, 
