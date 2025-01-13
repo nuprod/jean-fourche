@@ -17,7 +17,7 @@
         </xpath>
         <xpath expr="//a[@t-attf-href='/web/reset_password?{{ keep_query() }}']" position="replace">
             <a t-if="reset_password_enabled"
-                t-attf-href="/web/custom_reset_password_page?{{ keep_query() }}">Reset Password</a>
+                t-attf-href="/web/custom_reset_password_page?{{ keep_query() }}">Réinitialisation de votre mot de passe</a>
         </xpath>
     </template>
 </odoo>
