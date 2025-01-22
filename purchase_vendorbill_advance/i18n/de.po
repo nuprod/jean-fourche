@@ -1,0 +1,357 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* purchase_vendorbill_advance
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-20 12:14+0000\n"
+"PO-Revision-Date: 2024-02-20 12:14+0000\n"
+"Last-Translator: 2024\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\\n"
+
+#. module: purchase_vendorbill_advance
+#: model_terms:ir.ui.view,arch_db:purchase_vendorbill_advance.purchase_order_advance_payment_view_form
+msgid ""
+"<span invisible=\"advance_payment_method != 'percentage'\" class=\"oe_inline\">%\n"
+"                        </span>"
+msgstr ""
+"<span invisible=\"advance_payment_method != 'percentage'\" class=\"oe_inline\">%\n"
+"                        </span>"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,help:purchase_vendorbill_advance.field_purchase_advance_payment_inv__advance_payment_method
+msgid ""
+"A standard bill is issued with all the order lines ready for billing,"
+"         according to their billing policy (based on ordered or delivered "
+"quantity)."
+msgstr ""
+"Es wird eine Standardrechnung mit allen rechnungsfähigen Auftragszeilen ausgestellt,"
+"         gemäß der invoicing policy (basierend auf der bestellten oder gelieferten "
+"Menge)."
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,help:purchase_vendorbill_advance.field_purchase_advance_payment_inv__deposit_account_id
+msgid "Account used for deposits"
+msgstr "Konto für Einlagen"
+
+#. module: purchase_vendorbill_advance
+#. odoo-python
+#: code:addons/purchase_vendorbill_advance/wizard/purchase_make_invoice_advance.py:0
+#, python-format
+msgid "Advance: %s / %s"
+msgstr "Anzahlung: %s / %s"
+
+#. module: purchase_vendorbill_advance
+#: model_terms:ir.ui.view,arch_db:purchase_vendorbill_advance.purchase_order_advance_payment_view_form
+msgid ""
+"Bills will be created in draft so that you can review them\n"
+"                    before validation."
+msgstr ""
+"Die Rechnungen werden als Entwurf erstellt, damit Sie sie vor der Validierung überprüfen können"
+"                    vor der Validierung."
+
+#. module: purchase_vendorbill_advance
+#: model_terms:ir.ui.view,arch_db:purchase_vendorbill_advance.purchase_order_advance_payment_view_form
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model,name:purchase_vendorbill_advance.model_res_config_settings
+msgid "Config Settings"
+msgstr "Konfigurationseinstellungen"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.actions.act_window,name:purchase_vendorbill_advance.action_purchase_bill_advance
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_purchase_advance_payment_inv__advance_payment_method
+#: model_terms:ir.ui.view,arch_db:purchase_vendorbill_advance.purchase_order_advance_payment_view_form
+#: model_terms:ir.ui.view,arch_db:purchase_vendorbill_advance.purchase_order_view_form
+msgid "Create Bill"
+msgstr "Rechnung erstellen"
+
+#. module: purchase_vendorbill_advance
+#: model_terms:ir.ui.view,arch_db:purchase_vendorbill_advance.purchase_order_advance_payment_view_form
+msgid "Create and View Bill"
+msgstr "Rechnung erstellen und ansehen"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_purchase_advance_payment_inv__create_uid
+msgid "Created by"
+msgstr "Erstellt von"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_purchase_advance_payment_inv__create_date
+msgid "Created on"
+msgstr "Erstellt am"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_purchase_advance_payment_inv__currency_id
+msgid "Currency"
+msgstr "Währung"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_purchase_advance_payment_inv__deposit_taxes_ids
+msgid "Customer Taxes"
+msgstr "Steuersatz Kunde"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_purchase_advance_payment_inv__deduct_down_payments
+msgid "Deduct down payments"
+msgstr "Anzahlungen abziehen"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,help:purchase_vendorbill_advance.field_purchase_advance_payment_inv__currency_id
+msgid "Default company currency"
+msgstr "Standardwährung des Unternehmens"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,help:purchase_vendorbill_advance.field_res_config_settings__po_deposit_default_product_id
+msgid "Default product used for payment advances in purchase order"
+msgstr "Standardprodukt für Anzahlungen im Einkauf"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_purchase_advance_payment_inv__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_purchase_advance_payment_inv__amount
+msgid "Down Payment Amount"
+msgstr "Anzahlungsbetrag"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_purchase_advance_payment_inv__fixed_amount
+msgid "Down Payment Amount (Fixed)"
+msgstr "Anzahlungsbetrag (fest)"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_purchase_advance_payment_inv__product_id
+msgid "Down Payment Product"
+msgstr "Anzahlungsprodukt"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields.selection,name:purchase_vendorbill_advance.selection__purchase_advance_payment_inv__advance_payment_method__fixed
+msgid "Down payment (fixed amount)"
+msgstr "Anzahlung (Festbetrag)"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields.selection,name:purchase_vendorbill_advance.selection__purchase_advance_payment_inv__advance_payment_method__percentage
+msgid "Down payment (percentage)"
+msgstr "Anzahlung (prozentual)"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,help:purchase_vendorbill_advance.field_purchase_order_line__is_downpayment
+msgid ""
+"Down payments are made when creating Bills from a purchase order. They are "
+"not copied when duplicating a purchase order."
+msgstr ""
+"Anzahlungen werden bei der Erstellung von Rechnungen aus einer Bestellung geleistet. Sie werden"
+"beim Duplizieren einer Bestellung nicht kopiert."
+
+#. module: purchase_vendorbill_advance
+#: model_terms:ir.ui.view,arch_db:purchase_vendorbill_advance.view_account_invoice_filter
+msgid "Exclude Prepayment Bills"
+msgstr "Anzahlungsrechnungen ausschließen"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_purchase_advance_payment_inv__has_down_payments
+msgid "Has down payments"
+msgstr "Enthält Anzahlungen"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_purchase_advance_payment_inv__id
+msgid "ID"
+msgstr "ID"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_purchase_advance_payment_inv__deposit_account_id
+msgid "Income Account"
+msgstr "Erlöskonto"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_purchase_order_line__is_downpayment
+msgid "Is a down payment"
+msgstr "Ist eine Anzahlung"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model,name:purchase_vendorbill_advance.model_account_move
+msgid "Journal Entry"
+msgstr "Journal Entry"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_purchase_advance_payment_inv__write_uid
+msgid "Last Updated by"
+msgstr "Zuletzt aktualisiert durch"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_purchase_advance_payment_inv__write_date
+msgid "Last Updated on"
+msgstr "Zuletzt aktualisiert am"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_res_config_settings__po_deposit_default_product_id
+msgid "PO Deposit Product"
+msgstr "PO Deposit Produkt"
+
+#. module: purchase_vendorbill_advance
+#. odoo-python
+#: code:addons/purchase_vendorbill_advance/wizard/purchase_make_invoice_advance.py:0
+#, python-format
+msgid "Pre Payment"
+msgstr "Anzahlung"
+
+#. module: purchase_vendorbill_advance
+#. odoo-python
+#: code:addons/purchase_vendorbill_advance/models/purchase.py:0
+#: code:addons/purchase_vendorbill_advance/wizard/purchase_make_invoice_advance.py:0
+#, python-format
+msgid "Pre Payments"
+msgstr "Anzahlungen"
+
+#. module: purchase_vendorbill_advance
+#. odoo-python
+#: code:addons/purchase_vendorbill_advance/wizard/purchase_make_invoice_advance.py:0
+#, python-format
+msgid "Pre payment"
+msgstr "Anzahlung"
+
+#. module: purchase_vendorbill_advance
+#. odoo-python
+#: code:addons/purchase_vendorbill_advance/wizard/purchase_make_invoice_advance.py:0
+#, python-format
+msgid "Pre payment of %s%%"
+msgstr "Anzahlung von %s%%"
+
+#. module: purchase_vendorbill_advance
+#: model_terms:ir.ui.view,arch_db:purchase_vendorbill_advance.res_config_settings_view_form_purchase
+msgid "Pre-Payments"
+msgstr "Anzahlungen"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_account_bank_statement_line__prepayment_bill
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_account_move__prepayment_bill
+#: model:ir.model.fields,field_description:purchase_vendorbill_advance.field_account_payment__prepayment_bill
+msgid "Prepayment Bill"
+msgstr "Anzahlungsrechnung"
+
+#. module: purchase_vendorbill_advance
+#: model_terms:ir.ui.view,arch_db:purchase_vendorbill_advance.res_config_settings_view_form_purchase
+msgid "Product used for purchase pre-payments"
+msgstr "Produkt für Anzahlungen beim Einkauf"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model,name:purchase_vendorbill_advance.model_purchase_order
+msgid "Purchase Order"
+msgstr "Bestellung (PO)"
+
+#. module: purchase_vendorbill_advance
+#: model_terms:ir.ui.view,arch_db:purchase_vendorbill_advance.purchase_order_advance_payment_view_form
+msgid "Purchase Order Advance Bill"
+msgstr "Bestellung (PO) Anzahlungsrechnung"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model,name:purchase_vendorbill_advance.model_purchase_advance_payment_inv
+msgid "Purchase Order Advance Payment Bill"
+msgstr "Bestellung (PO) Anzahlungsbeleg"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model,name:purchase_vendorbill_advance.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "Bestell (PO)-Auftragszeile"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields.selection,name:purchase_vendorbill_advance.selection__purchase_advance_payment_inv__advance_payment_method__delivered
+msgid "Regular bill"
+msgstr "Reguläre Rechnung"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,help:purchase_vendorbill_advance.field_purchase_advance_payment_inv__deposit_taxes_ids
+msgid "Taxes used for deposits"
+msgstr "Für Einlagen verwendete Steuern"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,help:purchase_vendorbill_advance.field_purchase_advance_payment_inv__fixed_amount
+msgid "The fixed amount to be bill in advance, taxes excluded."
+msgstr "Der im Voraus zu berechnende Festbetrag ohne Steuern"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,help:purchase_vendorbill_advance.field_purchase_advance_payment_inv__amount
+msgid "The percentage of amount to be bill in advance, taxes excluded."
+msgstr "Der Prozentsatz des im Voraus zu berechnenden Betrags, ohne Steuern."
+
+#. module: purchase_vendorbill_advance
+#. odoo-python
+#: code:addons/purchase_vendorbill_advance/wizard/purchase_make_invoice_advance.py:0
+#, python-format
+msgid ""
+"The product used to invoice a down payment should be of type 'Service'. "
+"Please use another product or update this product."
+msgstr ""
+"Das Produkt, das für die Berechnung einer Anzahlung verwendet wird, sollte vom Typ 'Dienstleistung' sein. "
+"Bitte verwenden Sie ein anderes Produkt oder aktualisieren Sie dieses Produkt."
+
+#. module: purchase_vendorbill_advance
+#. odoo-python
+#: code:addons/purchase_vendorbill_advance/wizard/purchase_make_invoice_advance.py:0
+#, python-format
+msgid ""
+"The product used to invoice a down payment should have an invoice policy set"
+" to \"Ordered quantities\". Please update your deposit product to be able to"
+" create a deposit invoice."
+msgstr ""
+"Für das Produkt, das zur Fakturierung einer Anzahlung verwendet wird, sollte eine invoicing policy festgelegt werden"
+" auf \"Bestellte Mengen\". Bitte aktualisieren Sie Ihr Anzahlungsprodukt, damit Sie"
+" eine Anzahlungsrechnung erstellen zu können."
+
+#. module: purchase_vendorbill_advance
+#. odoo-python
+#: code:addons/purchase_vendorbill_advance/wizard/purchase_make_invoice_advance.py:0
+#, python-format
+msgid "The value of the down payment amount must be positive."
+msgstr "Der Wert der Anzahlung muss positiv sein."
+
+#. module: purchase_vendorbill_advance
+#. odoo-python
+#: code:addons/purchase_vendorbill_advance/models/purchase.py:0
+#, python-format
+msgid "There is nothing to bill!\n"
+"\n"
+"Reason(s) of this behavior could be:\n"
+"- You should receive your products before billing them: Click on the \"truck\" icon (top-right of your screen) and follow instructions.\n"
+"- You should modify the control policy of your product: Open the product, go to the \"Purchase\" tab and modify control policy from \"On received quantities\" to \"On ordered quantities\"."
+msgstr ""
+"Es gibt nichts in Rechnung zu stellen!\n"
+"\n"
+"Die Gründe für dieses Verhalten könnten sein:\n"
+"- Sie sollten Ihre Produkte erst annehmen, bevor Sie sie in Rechnung stellen: Klicken Sie auf das Symbol \"LKW\" (oben rechts auf Ihrem Bildschirm) und folgen Sie den Anweisungen.\n"
+"- Sie sollten die control policy für Ihr Produkt ändern: Öffnen Sie das Produkt, gehen Sie auf die Registerkarte \"Purchase\" und ändern Sie die control policy von \"Auf erhaltene Mengen\" auf \"Auf bestellte Mengen\"."
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,help:purchase_vendorbill_advance.field_account_bank_statement_line__prepayment_bill
+#: model:ir.model.fields,help:purchase_vendorbill_advance.field_account_move__prepayment_bill
+#: model:ir.model.fields,help:purchase_vendorbill_advance.field_account_payment__prepayment_bill
+msgid ""
+"This Flag is set to True while creating a Down Payment on a Purchase Order."
+msgstr ""
+"Diese Kennzeichnung wird bei der Erstellung einer Anzahlung für eine Bestellung auf Wahr gesetzt."
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,help:purchase_vendorbill_advance.field_purchase_advance_payment_inv__product_id
+msgid "To add the down payment product"
+msgstr "Das Produkt Anzahlung hinzufügen"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,help:purchase_vendorbill_advance.field_purchase_advance_payment_inv__has_down_payments
+msgid "To check the invoice in down payment or not"
+msgstr "Die Rechnung auf Anzahlung prüfen oder nicht"
+
+#. module: purchase_vendorbill_advance
+#: model:ir.model.fields,help:purchase_vendorbill_advance.field_purchase_advance_payment_inv__deduct_down_payments
+msgid "To mention the down payment amount deduct to next invoice"
+msgstr "Anzahlungsbetrag erwähnen, der bei der nächsten Rechnung abgezogen wird"

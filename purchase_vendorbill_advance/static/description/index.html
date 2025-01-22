@@ -1,0 +1,192 @@
+<html>
+
+<body class="c22 doc-content">
+	<center class="c17" id="h.t6cj9o81so5q"><span
+			style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 100%; max-width: 624.00px; height: auto;"><img
+				alt="" src="images/image16.png" class="img-fluid"
+				style="width: 100%; height: auto; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+				title=""></span></center>
+	<br>
+	<h1 class="c17 c18" id="h.d1fqskd3wfmz"><span class="c20 c14"></span></h1>
+	<h2 style="color:#714b67;"><span class="c14 c20">Purchase Order Prepayments (down payment)</span></h2>
+	<p class="c7 c6"><span class="c11 c15"></span></p>
+	<h5 class="c16" id="h.30j0zll"><span class="c0">Description</span></h5>
+	<p class="c7 c6"><span class="c2"></span></p>
+	<p class="c4"><span class="c12">This module is configured to allow a user to register down payments against purchase
+			orders and apply down payments to the final bill from the vendor.</span></p>
+	<h5 class="c16" id="h.1fob9te"><span class="c0">Configuration</span></h5>
+	<p class="c7 c6"><span class="c11 c15"></span></p>
+	<b class="c4"><span class="c2">Go to Settings - - &gt; Purchase - - &gt; Products.<br><br>Now, we have a new field
+			to set the &ldquo;Pre-Payments&rdquo; product. Once you process a Prepayment for a Purchase Order, then the
+			prepayment product is created automatically and updated on the Settings.</span></b>
+	<p class="c3 c6"><span class="c2"></span></p>
+	<p class="c3 c6"><span class="c2"></span></p>
+	<p class="c3"><span
+			style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 100%; max-width: 624.00px; height: auto;"><img
+				alt="" src="images/image3.png" class="img-fluid"
+				style="width: 100%; height: auto; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+				title=""></span></p>
+	<p class="c3 c6"><span class="c2"></span></p>
+	<h5 class="c16" id="h.3znysh7"><span class="c0">Functionality</span></h5>
+	<p class="c7 c6"><span class="c11 c15"></span></p>
+	<p class="c7"><span class="c2">Go to Purchase and create a new purchase order.</span></p>
+	<p class="c7 c6"><span class="c2"></span></p>
+	<p class="c7"><span class="c14 c12">Note:</span><span class="c2">&nbsp;Prepayment can be applied to the products
+			that have Control Policy as Ordered and Received Quantities.</span></p>
+	<p class="c7 c6"><span class="c2"></span></p>
+	<b class="c7"><span class="c12 c14">For Received Quantities:</span></b>
+	<p class="c6 c21"><span class="c2"></span></p>
+	<p class="c4"><span class="c2">Click on the Create Bill button, a wizard pops up to create a bill with the options:
+			Regular bill, &nbsp;Down payment (percentage) and Down payment (fixed amount).</span></p>
+	<p class="c4"><span
+			style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 100%; max-width: 624.00px; height: auto;"><img
+				alt="" src="images/image9.png" class="img-fluid"
+				style="width: 100%; height: auto; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+				title=""></span></p>
+	<p class="c7 c6"><span class="c2"></span></p>
+	<p class="c4"><span class="c2">Creating a bill by choosing the option as Down payment (percentage) with Down Payment
+			Amount as 20%.</span></p>
+	<p class="c3"><span
+			style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 100%; max-width: 624.00px; height: auto;"><img
+				alt="" src="images/image19.png" class="img-fluid"
+				style="width: 100%; height: auto; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+				title=""></span></p>
+	<p class="c3 c6"><span class="c11 c9"></span></p>
+	<p class="c3 c6"><span class="c11 c9"></span></p>
+	<p class="c3 c6"><span class="c11 c9"></span></p>
+	<p class="c1"><span class="c11 c9"></span></p>
+	<p class="c4"><span class="c2">A Vendor Bill is created as a prepayment bill. To indicate that, we have a boolean
+			named &ldquo;Prepayment Bill&rdquo; which will be enabled as True.<br><br>For Down payment (percentage), the
+			percentage is included in the Label on the Invoice Line.</span></p>
+	<p class="c4"><span
+			style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 100%; max-width: 624.00px; height: auto;"><img
+				alt="" src="images/image2.png" class="img-fluid"
+				style="width: 100%; height: auto; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+				title=""></span></p>
+	<p class="c4"><span class="c2">After confirming the vendor bill, we can create multiple down payment bills as per
+			our requirement. </span></p>
+	<p class="c1"><span class="c2"></span></p>
+	<p class="c1"><span class="c2"></span></p>
+	<p class="c1"><span class="c2"></span></p>
+	<p class="c1"><span class="c2"></span></p>
+	<p class="c1"><span class="c2"></span></p>
+	<p class="c1"><span class="c2"></span></p>
+	<p class="c1"><span class="c2"></span></p>
+	<p class="c1"><span class="c2"></span></p>
+	<p class="c1"><span class="c2"></span></p>
+	<p class="c1"><span class="c2"></span></p>
+	<p class="c4"><span class="c2">Now, creating another bill with Down Payment (fixed amount) as 100.</span></p>
+	<p class="c1"><span class="c2"></span></p>
+	<p class="c4"><span
+			style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 100%; max-width: 624.00px; height: auto;"><img
+				alt="" src="images/image8.png" class="img-fluid"
+				style="width: 100%; height: auto; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+				title=""></span></p>
+	<p class="c3 c6"><span class="c11 c9"></span></p>
+	<p class="c3"><span
+			style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 100%; max-width: 624.00px; height: auto;"><img
+				alt="" src="images/image14.png" class="img-fluid"
+				style="width: 100%; height: auto; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+				title=""></span></p>
+	<p class="c1"><span class="c2"></span></p>
+	<p class="c1"><span class="c2"></span></p>
+	<p class="c1"><span class="c2"></span></p>
+	<p class="c4"><span class="c2">Now, Partially receiving the products.</span></p>
+	<p class="c4"><span
+			style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 100%; max-width: 624.00px; height: auto;"><img
+				alt="" src="images/image5.png" class="img-fluid"
+				style="width: 100%; height: auto; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+				title=""></span></p>
+	<p class="c4"><span class="c2">Since the products have been partially received and we have prepayment bills,
+			creating a bill defaults to &ldquo;Regular bill&rdquo; with &ldquo;Deduct down payments&rdquo; boolean
+			automatically enabled.</span></p>
+	<p class="c4"><span class="c2">We can disable the boolean if we need to generate a regular bill alone.</span></p>
+	<p class="c4"><span class="c12"><br>For this case, disabling the boolean and creating a regular bill.</span></p>
+	<p class="c3"><span
+			style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 100%; max-width: 624.00px; height: auto;"><img
+				alt="" src="images/image17.png" class="img-fluid"
+				style="width: 100%; height: auto; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+				title=""></span></p>
+	<p class="c3"><span class="c11 c9">A normal bill will be created for the partially received products.</span></p>
+	<p class="c3"><span
+			style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 100%; max-width: 624.00px; height: auto;"><img
+				alt="" src="images/image6.png" class="img-fluid"
+				style="width: 100%; height: auto; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+				title=""></span></p>
+	<p class="c4"><span class="c9">Receiving the remaining products and creating a final bill with </span><span
+			class="c12">Deduct down payments boolean enabled.</span></p>
+	<p class="c3"><span
+			style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 100%; max-width: 624.00px; height: auto;"><img
+				alt="" src="images/image4.png" class="img-fluid"
+				style="width: 100%; height: auto; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+				title=""></span></p>
+	<p class="c3 c6"><span class="c11 c9"></span></p>
+	<p class="c3 c6"><span class="c11 c9"></span></p>
+	<p class="c3"><span
+			style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 100%; max-width: 624.00px; height: auto;"><img
+				alt="" src="images/image10.png" class="img-fluid"
+				style="width: 100%; height: auto; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+				title=""></span></p>
+	<p class="c4"><span class="c9">Final Vendor Bill with the prepayment deduction will be created. The prepayments are
+			added under different </span><span class="c9">section</span><span class="c11 c9">.</span></p>
+	<p class="c4"><span
+			style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 100%; max-width: 624.00px; height: auto;"><img
+				alt="" src="images/image1.png" class="img-fluid"
+				style="width: 100%; height: auto; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+				title=""></span></p>
+	<p class="c4"><span class="c9 c11">Partially returning the products received.</span></p>
+	<p class="c4"><span
+			style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 100%; max-width: 624.00px; height: auto;"><img
+				alt="" src="images/image18.png" class="img-fluid"
+				style="width: 100%; height: auto; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+				title=""></span></p>
+	<p class="c4"><span class="c9">A Vendor Credit Note will be created for the partially returned products.</span></p>
+	<p class="c3"><span
+			style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 100%; max-width: 624.00px; height: auto;"><img
+				alt="" src="images/image15.png" class="img-fluid"
+				style="width: 100%; height: auto; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+				title=""></span></p>
+	<b class="c3"><span class="c8">For Ordered Quantities:</span></b>
+	<p class="c7"><span class="c2">Go to Purchase and create a new purchase order.</span></p>
+	<p class="c7 c6"><span class="c2"></span></p>
+	<p class="c4"><span class="c14 c12">Note:</span><span class="c2">&nbsp;As its control policy is based on ordered
+			quantity, creating a bill defaults to the &ldquo;Regular bill&rdquo; option. The Down payment option can be
+			applied for this case.</span></p>
+	<p class="c4"><span class="c12">Creating a bill by choosing the option as Down payment (percentage) with Down
+			payment amount as 50%.</span></p>
+	<p class="c3"><span
+			style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 100%; max-width: 624.00px; height: auto;"><img
+				alt="" src="images/image11.png" class="img-fluid"
+				style="width: 100%; height: auto; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+				title=""></span></p>
+	<p class="c3"><span
+			style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 100%; max-width: 624.00px; height: auto;"><img
+				alt="" src="images/image7.png" class="img-fluid"
+				style="width: 100%; height: auto; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+				title=""></span></p>
+	<p class="c3"><span class="c12">Creating the final bill without receiving the products so it defaults to the
+			&nbsp;&ldquo;Regular bill&rdquo; with &ldquo;Deduct down payments&rdquo; boolean automatically
+			enabled.<br></span></p>
+	<h2 class="c16" id="h.b4xhcaqvf4in"><span
+			style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 100%; max-width: 624.00px; height: auto;"><img
+				alt="" src="images/image12.png" class="img-fluid"
+				style="width: 100%; height: auto; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+				title=""></span></h2>
+	<p class="c7"><span
+			style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 100%; max-width: 624.00px; height: auto;"><img
+				alt="" src="images/image13.png" class="img-fluid"
+				style="width: 100%; height: auto; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+				title=""></span></p>
+	<h2 class="c16" id="h.2gor1v1dr060"><span class="c14 c28">Credits</span></h2>
+	<h3 class="c16" id="h.2et92p0"><span class="c14 c25">Contributors</span></h3>
+	<ul class="c27 lst-kix_list_1-0 start">
+		<li class="c26 li-bullet-0"><span class="c9 c19">Sodexis &lt;</span><span class="c9 c13"><a class="c10"
+					href="mailto:apps@sodexis.com">apps@sodexis.com</a></span><span class="c9 c19">&gt;</span></li>
+	</ul>
+	<p class="c3"><span class="c9 c19">This module is maintained by Sodexis.</span></p>
+	<div>
+		<p class="c7 c6"><span class="c11 c15"></span></p>
+	</div>
+</body>
+
+</html>
