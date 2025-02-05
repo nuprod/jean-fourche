@@ -116,6 +116,7 @@ class DeliveryCarrier(models.Model):
                     "listUmgs":parcel_data,
                     "poidsTotal":pickings.shipping_weight or 0,
                     # "volumeTotal":,
+                    "optionLivraison": "RDW",
                     "emailNotificationDestinataire": receiver_id.email or '',
                     "smsNotificationDestinataire": receiver_id.mobile or ''
                 }
