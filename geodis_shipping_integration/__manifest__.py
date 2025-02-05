@@ -26,3 +26,5 @@
         'currency': 'EUR',
         'license': 'OPL-1',
 }
+
+#https://espace-client.geodis.com/docapi/fr/#operation/enregistrementEnvoisUsingPOST
