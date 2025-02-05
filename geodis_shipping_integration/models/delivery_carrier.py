@@ -72,7 +72,7 @@ class DeliveryCarrier(models.Model):
 
         data = {
             "impressionEtiquette": "False",
-            "typeImpressionEtiquette": "T",
+            "typeImpressionEtiquette": "P",
             "formatEtiquette": str(self.format_etiquette),
             "validationEnvoi": "false",
             "suppressionSiEchecValidation": "false",#self.suppression_validation,
