@@ -50,7 +50,7 @@ class DeliveryCarrier(models.Model):
                 "paletteConsignee": "False",
                 "quantite": 1,
                 "poids": package_id.shipping_weight,
-                #"volume": 5,
+                "volume": 0.1,
                 "longueurUnitaire": package_id.package_type_id and package_id.package_type_id.packaging_length or 0,
                 "largeurUnitaire": package_id.package_type_id.width or 0,
                 "hauteurUnitaire": package_id.package_type_id.height or 0,
@@ -63,7 +63,7 @@ class DeliveryCarrier(models.Model):
                     "paletteConsignee": "False",
                     "quantite": 1,
                     "poids": round(total_bulk_weight / float(pickings.number_of_label),2),
-                    #"volume": 5,
+                    "volume": 0.1,
                     "longueurUnitaire": int(self.geodis_package_id.packaging_length or 0),
                     "largeurUnitaire": int(self.geodis_package_id.width),
                     "hauteurUnitaire": int(self.geodis_package_id.height or 0),
@@ -71,8 +71,8 @@ class DeliveryCarrier(models.Model):
                 })
 
         data = {
-            "impressionEtiquette": "True",
-            "typeImpressionEtiquette": "T",
+            "impressionEtiquette": "False",
+            "typeImpressionEtiquette": "P",
             "formatEtiquette": str(self.format_etiquette),
             "validationEnvoi": "false",
             "suppressionSiEchecValidation": "false",#self.suppression_validation,
@@ -234,6 +234,20 @@ class DeliveryCarrier(models.Model):
     def geodis_get_tracking_link(self, picking):
         """This Method Is Used For Track The Shippment"""
         return "https://espace-client-tvp.geodis.com/services/destinataires/#/%s/home"%(picking.carrier_tracking_ref)
+
+
+# Matière dangereuse
+# {
+#   "noONU": "string",
+#   "groupeEmballage": "stri",
+#   "classeADR": "string",
+#   "codeTypeEmballage": "stri",
+#   "nbEmballages": 0,
+#   "nomTechnique": "string",
+#   "codeQuantite": "PBT",
+#   "poidsVolume": 0,
+#   "dangerEnv": true
+# }
 
     # def response(self):
     #     response = {
