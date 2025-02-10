@@ -22,13 +22,13 @@
         <xpath expr="//button[@name='action_create_invoice']" position="before">
                 <button name="%(purchase_vendorbill_advance.action_purchase_bill_advance)d"
                         string="Create Bill"
-                        invisible = "invoice_status != 'to invoice'"
+                        invisible="invoice_status != 'to invoice'"
                         type="action" data-hotkey="w"/>
         </xpath>
         <xpath expr="//button[@name='action_create_invoice']" position="before">
                         <button name="%(purchase_vendorbill_advance.action_purchase_bill_advance)d"
                         string="Create Bill"
-                        invisible =  "state not in ('purchase', 'done') or invoice_status not in ('no','invoiced')"
+                        invisible="state not in ('purchase', 'done') or invoice_status not in ('no','invoiced')"
                         context="{'default_advance_payment_method': 'percentage'}"
                         type="action" data-hotkey="w"/>
             </xpath>
