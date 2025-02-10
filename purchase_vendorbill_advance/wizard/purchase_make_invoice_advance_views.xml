@@ -23,21 +23,19 @@
                         <label for="deduct_down_payments"/>
                     </div>
                     <label for="amount"
-                        invisible="not in_('fixed','percentage', advance_payment_method)"
-                    </label>
-                    <div invisible ="not in_('fixed','percentage', advance_payment_method)"
-                        id="payment_method_details">
+                    invisible="advance_payment_method not in ('fixed','percentage')"/>
+                    <div>
                         <field name="currency_id" invisible="1"/>
                         <field name="fixed_amount"
-                            required="==('fixed', advance_payment_method)"
-                            invisible ="!=('fixed', advance_payment_method)"
-                            class="oe_inline"/>
+                               required="advance_payment_method == 'fixed'"
+                               invisible ="advance_payment_method !='fixed'"
+                               class="oe_inline"/>
                         <field name="amount"
-                            required ="==('percentage', advance_payment_method)"
-                            invisible ="!=('percentage', advance_payment_method)"
-                            class="oe_inline"/>
+                               required ="advance_payment_method == 'percentage'"
+                               invisible ="advance_payment_method != 'percentage'"
+                               class="oe_inline"/>
                         <span
-                                invisible="!=('percentage', advance_payment_method)"
+                                invisible="advance_payment_method != 'percentage'"
                                 class="oe_inline">%
                         </span>
                     </div>
