@@ -22,7 +22,7 @@
                         <field name="deduct_down_payments" nolabel="1"/>
                         <label for="deduct_down_payments"/>
                     </div>
-                    <label for="amount"/>
+                    <label for="amount" invisible="advance_payment_method not in ('fixed','percentage')"/>
                     <div>
                         <field name="currency_id" invisible="1"/>
                         <field name="fixed_amount"
