@@ -22,22 +22,18 @@
                         <field name="deduct_down_payments" nolabel="1"/>
                         <label for="deduct_down_payments"/>
                     </div>
-                    <label for="amount"
-                    invisible="advance_payment_method not in ('fixed','percentage')"/>
-                    <div invisible ="advance_payment_method not in ('fixed','percentage')"
-                         id="payment_method_details">
+                    <label for="amount" invisible="advance_payment_method not in ('fixed','percentage')"/>
+                    <div>
                         <field name="currency_id" invisible="1"/>
                         <field name="fixed_amount"
+                                invisible="advance_payment_method in ('delivered','percentage')"
                                required="advance_payment_method == 'fixed'"
-                               invisible ="advance_payment_method !='fixed'"
                                class="oe_inline"/>
                         <field name="amount"
-                               required ="advance_payment_method == 'percentage'"
-                               invisible ="advance_payment_method != 'percentage'"
+                                invisible="advance_payment_method in ('fixed','delivered')"
+                               required="advance_payment_method == 'percentage'"
                                class="oe_inline"/>
-                        <span
-                                invisible="advance_payment_method != 'percentage'"
-                                class="oe_inline">%
+                        <span invisible="advance_payment_method in ('fixed','delivered')" class="oe_inline">%
                         </span>
                     </div>
                     <field name="product_id"
