@@ -33,7 +33,7 @@
                                 invisible="advance_payment_method in ('fixed','delivered')"
                                required="advance_payment_method == 'percentage'"
                                class="oe_inline"/>
-                        <span class="oe_inline">%
+                        <span invisible="advance_payment_method in ('fixed','delivered')" class="oe_inline">%
                         </span>
                     </div>
                     <field name="product_id"
