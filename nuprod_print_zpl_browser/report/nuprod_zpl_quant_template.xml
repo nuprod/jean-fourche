@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="nuprod_quant_template_zpl">
+            <t t-foreach="docs" t-as="quant">
+                <t t-translation="off">
+                <t t-set="lineHeight" t-value="50"/>
+                <t t-set="barcode" t-value="lineHeight + 100"/>
+                ^XA^CI28
+                <t t-if="quant.lot_id">
+                    ^FO150,<t t-out="lineHeight"/>
+                    ^A0N,44,33^FDProduit: <t t-out="quant.lot_id.product_id.display_name"/>^FS
+                    <t t-set="lineHeight" t-value="lineHeight + 50"/>
+                    ^FO150,<t t-out="lineHeight"/>
+                    ^A0N,44,33^FDQuantite: <t t-out="quant.quantity"/> <t t-out="quant.lot_id.product_uom_id.name"/>^FS
+                    <t t-set="lineHeight" t-value="lineHeight + 50"/>
+                </t>
+                ^FO150,<t t-out="lineHeight"/>
+                <t t-if="quant.package_id">
+                    ^A0N,44,33^FDPalette: <t t-out="quant.package_id.name"/>^FS
+                    <t t-set="lineHeight" t-value="lineHeight + 50"/>
+                    ^FO150,<t t-out="lineHeight"/>
+                    <t t-if="quant.package_id.pack_date">
+                        ^A0N,44,33^FDDate d'emballage: <t t-out="quant.package_id.pack_date" t-options='{"widget": "date"}'/>
+                        ^FS
+                        <t t-set="lineHeight" t-value="lineHeight + 50"/>
+                    </t>
+                </t>
+                <t t-elif="quant.lot_id">
+                    ^A0N,44,33^FDLot: <t t-out="quant.lot_id.name"/>^FS
+                    <t t-set="lineHeight" t-value="lineHeight + 50"/>
+                    ^FO150,<t t-out="lineHeight"/>
+                </t>
+                ^FO15,50^BY3
+                ^BON,4,N,104
+                <t t-if="quant.package_id">
+                    ^FD<t t-out="quant.package_id.name"/>^FS
+                </t>  
+                <t t-elif="quant.lot_id">
+                    ^FD<t t-out="quant.lot_id.name"/>^FS
+                </t>             
+                ^XZ
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
