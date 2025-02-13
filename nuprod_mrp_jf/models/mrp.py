@@ -12,7 +12,6 @@ class nuprod_mrp(models.Model):
 
     def button_plan(self):
         
-        procurement_group_id = self.procurement_group_id
-        sale_order = self.env['sale.order'].search([('procurement_group_id', '=', procurement_group_id.id)])
-        _logger.warning(sale_order)
+        sale_order_ids = self.procurement_group_id.mrp_production_ids.move_dest_ids.group_id.sale_id.ids
+        _logger.warning(sale_order_ids)
         return super().button_plan()
