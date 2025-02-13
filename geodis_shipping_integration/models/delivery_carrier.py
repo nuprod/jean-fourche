@@ -22,6 +22,11 @@ class DeliveryCarrier(models.Model):
     format_etiquette = fields.Selection([('1', '1-135'),
                                          ('2', '2-150')], string="Format Label")
     product_code = fields.Char(string="Product Code")
+    option_livraison = fields.Selection([('RDW', 'Rendez-vous Web'),
+                                        ('RDT', 'Rendez-vous téléphonique'),
+                                        ('BRT', 'Retrait en agence GEODIS'),
+                                        ('DSL', 'Date souhaitée de Livraison'),
+                                        ('SAM', 'Livraison un Samedi Matin')], string="Delivery Option") 
 
     def geodis_rate_shipment(self, order):
         return {'success': True, 'price': 0.0, 'error_message': False, 'warning_message': False}
@@ -116,7 +121,7 @@ class DeliveryCarrier(models.Model):
                     "listUmgs":parcel_data,
                     "poidsTotal":pickings.shipping_weight or 0,
                     # "volumeTotal":,
-                    "optionLivraison": "RDW",
+                    "optionLivraison": str(self.option_livraison),
                     "emailNotificationDestinataire": receiver_id.email or '',
                     "smsNotificationDestinataire": receiver_id.mobile or ''
                 }
