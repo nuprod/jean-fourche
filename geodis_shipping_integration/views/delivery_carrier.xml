@@ -22,6 +22,8 @@
                                    required="delivery_type == 'geodis'"/>
                             <field name="option_livraison"
                                    required="delivery_type == 'geodis'"/>
+                            <field name="type_impression"
+                                   required="delivery_type == 'geodis'"/>
                         </group>
                     </group>
                 </page>
