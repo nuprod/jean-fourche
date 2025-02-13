@@ -11,5 +11,8 @@ class nuprod_mrp(models.Model):
     _inherit = 'mrp.production'
 
     def button_plan(self):
-        _logger.warning('button_plan')
+        
+        procurement_group_id = self.procurement_group_id
+        sale_order = self.env['sale.order'].search([('procurement_group_id', '=', procurement_group_id)])
+        _logger.warning(sale_order)
         return super().button_plan()

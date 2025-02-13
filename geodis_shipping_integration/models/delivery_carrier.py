@@ -28,6 +28,14 @@ class DeliveryCarrier(models.Model):
                                         ('DSL', 'Date souhaitée de Livraison'),
                                         ('SAM', 'Livraison un Samedi Matin')], string="Delivery Option") 
 
+    type_impression = fields.Selection([('P', 'PDF'),
+                                        ('T', 'PDF themique'),
+                                        ('J', 'Json'),
+                                        ('E', 'EPL'),
+                                        ('Z', 'ZPL 200dpi'),
+                                        ('Y', 'ZPL 300dpi'),
+                                        ('W', 'ZPL 600dpi')], string="Type Impression")
+
     def geodis_rate_shipment(self, order):
         return {'success': True, 'price': 0.0, 'error_message': False, 'warning_message': False}
 
@@ -77,7 +85,7 @@ class DeliveryCarrier(models.Model):
 
         data = {
             "impressionEtiquette": "False",
-            "typeImpressionEtiquette": "P",
+            "typeImpressionEtiquette": str(self.type_impression),
             "formatEtiquette": str(self.format_etiquette),
             "validationEnvoi": "false",
             "suppressionSiEchecValidation": "false",#self.suppression_validation,
