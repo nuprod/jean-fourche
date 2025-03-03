@@ -2,7 +2,7 @@
     'name': "nuprod_tacker_payment_method",
     'description': """
        This module tracks the payment method selected by the customer.
-       The module add 2 new fields: payment_method_id in account.payment.term and payment_method_selected_for_sale in sale.order
+       The module add 1 new fields: payment_method_id in account.payment.term
     """,
     'author': "NUprod",
     'website': "http://www.nuprod.fr",
