@@ -1,0 +1,15 @@
+<!-- <?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="nuprod_view_order_form_inherited" model="ir.ui.view">
+        <field name="name">nuprod.view.order.form.inherited</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="payment_method_selected_for_sale"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo> -->
