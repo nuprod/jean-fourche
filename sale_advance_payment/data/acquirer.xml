@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+	<record id="sap_transfer" model="sap.acquirer">
+		<field name="name">transfer</field>
+	</record>
+	
+	<record id="sap_paypal" model="sap.acquirer">
+		<field name="name">paypal</field>
+	</record>
+	
+	<record id="sap_test" model="sap.acquirer">
+		<field name="name">test</field>
+	</record>
+	
+	<record id="sap_paybox" model="sap.acquirer">
+		<field name="name">paybox</field>
+	</record>
+	
+</odoo>

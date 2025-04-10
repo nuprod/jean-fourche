@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+	<record id="account_journal_form" model="ir.ui.view">
+		<field name="name">account.journal.form</field>
+		<field name="model">account.journal</field>
+		<field name="inherit_id" ref="account.view_account_journal_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook" position="inside">
+				<page string="Intermediaires">
+					<field name="acquirer_ids"/>
+				</page>
+			</xpath>
+			<xpath expr="//sheet" position="before">
+				<header>
+					<button name="create_acquirer" string="Créer intermédiaire de paiement" type="object"/>
+				</header>
+			</xpath>
+		</field>
+	</record>
+	
+</odoo>
