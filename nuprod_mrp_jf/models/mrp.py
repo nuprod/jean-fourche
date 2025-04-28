@@ -11,8 +11,7 @@ class nuprod_mrp(models.Model):
     _inherit = 'mrp.production'
 
     def button_plan(self):
-        
-        sale_order_ids = self.procurement_group_id.mrp_production_ids.move_dest_ids.group_id.sale_id.ids
-        sale_order = self.env['sale.order'].search([('id', 'in', sale_order_ids)])
-        sale_order.commitment_date = self.date_finished
+        for production in self:
+            sale_order_id = self.procurement_group_id.mrp_production_ids.move_dest_ids.group_id.sale_id
+            sale_order_id.commitment_date = production.date_finished
         return super().button_plan()
