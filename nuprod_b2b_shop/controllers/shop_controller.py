@@ -4,7 +4,7 @@ from odoo.addons.website_sale.controllers.main import WebsiteSale
 
 class CustomWebsiteShop(WebsiteSale):
 
-    @http.route(['/shop', '/', '/shop/', '/shop/<path:path>'], type='http', auth="user", website=True)
+    @http.route(['/shop', '/shop/', '/shop/<path:path>'], type='http', auth="user", website=True)
     def shop(self, **post):
         # Vérifier si l'utilisateur est connecté
         if not request.env.user or request.env.user._is_public():
