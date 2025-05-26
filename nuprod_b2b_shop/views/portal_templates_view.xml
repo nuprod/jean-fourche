@@ -6,7 +6,7 @@
             <div class="o_portal_category row g-2 mt-3" id="portal_common_shop">
                 <t t-call="portal.portal_docs_entry" />
                 <t t-call="portal.portal_docs_entry">
-                    <t t-set="icon" t-value="'/nuprod_shop_controller/static/src/img/box.png'"/>
+                    <t t-set="icon" t-value="'/nuprod_b2b_shop/static/src/img/box.png'"/>
                     <!-- <img src="/enterprise/iot/static/src/img/box.svg" alt="image boite de commerce"/> -->
                     <t t-set="title">Saisir une commande</t>
                     <t t-set="text">Rendez-vous sur la boutique en ligne</t>

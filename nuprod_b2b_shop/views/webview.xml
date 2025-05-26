@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="headerB2BNuprodSwitch" inherit_id="website_sale.header_cart_link" name="Price Switch">
+        <xpath expr="//t[@t-set='show_cart']" position="before">
+            <div class="custom-switch-toggle my-3 text-end">
+            <label class="switch">
+                <input type="checkbox" t-att-checked="" t-on-change="toggle"/>
+                <span class="slider round"></span>
+            </label>
+            <span>B2B Pricing</span>
+        </div>
+        </xpath>
+        </template>
+    </odoo>

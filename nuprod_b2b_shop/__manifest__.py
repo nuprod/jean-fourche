@@ -8,15 +8,17 @@
     'version': '17.0.1.0',
     'category': 'Uncategorized',
     'depends': ['base', 'website_sale'],
-    # 'data': [
-    #     'views/portal_templates_view.xml',
-    #     'views/auth_signup_login_templates_view.xml',
-    # ], 
-    # 'assets': {
-    #     'web.assets_frontend': [
-    #         'nuprod_shop_controller/static/src/css/*.css',
-    #     ],
-    #},
+    'data': [
+        'views/portal_templates_view.xml',
+        'views/auth_signup_login_templates_view.xml',
+        'views/webview.xml'
+    ], 
+    'assets': {
+        'web.assets_frontend': [
+            'nuprod_b2b_shop/static/src/css/*.css',
+            'nuprod_b2b_shop/static/src/js/*.js',
+        ],
+    },
     'installable': True,  
     'application': False, 
     'auto_install': False,
