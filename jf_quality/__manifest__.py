@@ -9,6 +9,8 @@ Amélioration du module qualité
 07/02 : Affectation automatique du fournisseur lors de l'affectation d'un transfert dans la Quality Alert
 07/02 : Affectation des Quality alert aux commandes d'achat
 07/02 : Affichage des Quality alert associées au fournisseur dans la fiche fournisseur
+07/02 : Si Quality alert créée depuis un Quality check alors récupéré la livraison et le fournisseur.
+07/02 : Créer un formulaire qui reprend les éléments du champs note
     """,
 
     'author': "Fabien Lauroua",
@@ -26,8 +28,9 @@ Amélioration du module qualité
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/purchase_order',
-        'views/res_partner',
+        'views/purchase_order.xml',
+        'views/res_partner.xml',
+        'views/quality_alert_report.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

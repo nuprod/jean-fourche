@@ -1,0 +1,83 @@
+<odoo>
+
+  <record id="action_report_quality_alert" model="ir.actions.report">
+    <field name="name">Quality Alert</field>
+    <field name="model">quality.alert</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">jf_quality.report_quality_alert_document</field>
+    <field name="report_file">jf_quality.report_quality_alert_document</field>
+    <field name="print_report_name">'Quality Alert - %s' % (object.name or '')</field>
+    <field name="binding_model_id" ref="quality_control.model_quality_alert"/>
+    <field name="binding_type">report</field>
+  </record>
+
+<template id="report_quality_alert_document">
+  <!-- html_container crée le <main> attendu par Odoo -->
+  <t t-call="web.html_container">
+    <t t-foreach="docs" t-as="o">
+      <t t-call="web.external_layout">
+        <div class="page">
+
+          <h2 style="margin-bottom: 10px;">
+            Quality Alert
+            <t t-if="o.name">
+              - <t t-esc="o.name"/>
+            </t>
+          </h2>
+
+          <table class="table table-sm o_main_table" style="width: 100%; margin-bottom: 15px;">
+            <tbody>
+              <tr>
+                <td style="width: 25%;"><strong>Titre</strong></td>
+                <td style="width: 25%;"><span t-esc="o.title or ''"/></td>
+                <td style="width: 25%;"><strong>Date</strong></td>
+                <td style="width: 25%;"><span t-esc="o.create_date or ''"/></td>
+              </tr>
+              <tr>
+                <td><strong>Produit</strong></td>
+                <td><span t-esc="o.product_id.display_name if o.product_id else ''"/></td>
+                <td><strong>Lot/Série</strong></td>
+                <td><span t-esc="o.lot_id.name if o.lot_id else ''"/></td>
+              </tr>
+              <tr>
+                <td><strong>Fournisseur</strong></td>
+                <td><span t-esc="o.partner_id.display_name if o.partner_id else ''"/></td>
+                <td><strong>Commande d’achat</strong></td>
+                <td>
+                  <t t-if="'purchase_id' in o._fields and o.purchase_id">
+                    <span t-esc="o.purchase_id.name"/>
+                  </t>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Réception</strong></td>
+                <td><span t-esc="o.picking_id.name if o.picking_id else ''"/></td>
+                <td><strong>Équipe</strong></td>
+                <td><span t-esc="o.team_id.display_name if o.team_id else ''"/></td>
+              </tr>
+              <tr>
+                <td><strong>Responsable</strong></td>
+                <td><span t-esc="o.user_id.display_name if o.user_id else ''"/></td>
+                <td><strong>Société</strong></td>
+                <td><span t-esc="o.company_id.display_name if o.company_id else ''"/></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3 style="margin-top: 0;">Notes</h3>
+          <div style="border: 1px solid #ddd; padding: 10px; min-height: 250px;">
+            <t t-if="o.description">
+              <t t-esc="o.description"/>
+            </t>
+            <t t-else="">
+              <em>Aucune note.</em>
+            </t>
+          </div>
+
+        </div>
+      </t>
+    </t>
+  </t>
+</template>
+
+</odoo>

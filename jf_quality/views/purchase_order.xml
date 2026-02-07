@@ -1,4 +1,13 @@
 <odoo>
+
+  <record id="action_quality_alerts_from_po" model="ir.actions.act_window">
+    <field name="name">Quality Alerts</field>
+    <field name="res_model">quality.alert</field>
+    <field name="view_mode">tree,form</field>
+    <field name="domain">[('purchase_id', '=', active_id)]</field>
+    <field name="context">{'default_purchase_id': active_id}</field>
+  </record>
+    
   <record id="purchase_order_form_inherit_quality_alert" model="ir.ui.view">
     <field name="name">purchase.order.form.inherit.quality.alert</field>
     <field name="model">purchase.order</field>
@@ -15,11 +24,4 @@
     </field>
   </record>
 
-  <record id="action_quality_alerts_from_po" model="ir.actions.act_window">
-    <field name="name">Quality Alerts</field>
-    <field name="res_model">quality.alert</field>
-    <field name="view_mode">tree,form</field>
-    <field name="domain">[('purchase_id', '=', active_id)]</field>
-    <field name="context">{'default_purchase_id': active_id}</field>
-  </record>
 </odoo>

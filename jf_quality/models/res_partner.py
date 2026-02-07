@@ -5,7 +5,7 @@ class ResPartner(models.Model):
 
     quality_alert_ids = fields.One2many(
         "quality.alert",
-        "supplier_id",
+        "partner_id",
         string="Quality Alerts",
     )
 

@@ -1,16 +1,19 @@
+# -*- coding: utf-8 -*-
 from odoo import fields, models
+
 
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
     quality_alert_ids = fields.One2many(
-        "quality.alert",
-        "purchase_id",
+        comodel_name="quality.alert",
+        inverse_name="purchase_id",
         string="Quality Alerts",
     )
 
     quality_alert_count = fields.Integer(
-        compute="_compute_quality_alert_count"
+        compute="_compute_quality_alert_count",
+        string="Quality Alerts Count",
     )
 
     def _compute_quality_alert_count(self):
