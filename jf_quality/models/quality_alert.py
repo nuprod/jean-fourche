@@ -22,6 +22,42 @@ class QualityAlert(models.Model):
         help="Quality check that originated this alert, when applicable.",
     )
 
+    piece_qty = fields.Integer(
+        string="Nombre de pièces",
+        default=1,
+        help="Nombre de pièces concernées par l'alerte.",
+    )
+
+    criticality = fields.Selection(
+        selection=[
+            ("minor", "Mineur / Minor"),
+            ("major", "Majeur / Major"),
+            ("critical", "Critique / Critical"),
+        ],
+        string="Niveau de criticité",
+        default="minor",
+        required=True,
+        index=True,
+    )
+
+    request_type = fields.Selection(
+        selection=[
+            ("replacement", "Demande de remplacement / Replacement"),
+            ("credit_note", "Demande d’avoir / Credit note"),
+        ],
+        string="Type de demande",
+        index=True,
+    )
+
+    supplier_quality_contact_id = fields.Many2one(
+        comodel_name="res.partner",
+        string="Contact qualité (fournisseur)",
+        domain="[('parent_id', '=', partner_id), ('type', 'in', ('contact', 'other'))]",
+        help="Contact qualité rattaché au fournisseur (contact enfant).",
+    )
+
+    
+
     # -------------------------
     # ONCHANGE
     # -------------------------

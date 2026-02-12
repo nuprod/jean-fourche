@@ -31,6 +31,7 @@ Amélioration du module qualité
         'views/purchase_order.xml',
         'views/res_partner.xml',
         'views/quality_alert_report.xml',
+        'views/quality_alert.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
