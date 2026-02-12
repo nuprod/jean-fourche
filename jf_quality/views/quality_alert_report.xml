@@ -1,0 +1,113 @@
+<odoo>
+
+  <record id="action_report_quality_alert" model="ir.actions.report">
+    <field name="name">Quality Alert</field>
+    <field name="model">quality.alert</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">jf_quality.report_quality_alert_document</field>
+    <field name="report_file">jf_quality.report_quality_alert_document</field>
+    <field name="print_report_name">'Quality Alert - %s' % (object.name or '')</field>
+    <field name="binding_model_id" ref="quality_control.model_quality_alert"/>
+    <field name="binding_type">report</field>
+  </record>
+
+<template id="report_quality_alert_document">
+  <!-- html_container crée le <main> attendu par Odoo -->
+  <t t-call="web.html_container">
+    <t t-foreach="docs" t-as="o">
+      <t t-call="web.external_layout">
+        <div class="page">
+
+          <h2 style="margin-bottom: 10px;">
+            Quality Alert
+            <t t-if="o.name">
+              - <t t-esc="o.name"/>
+            </t>
+          </h2>
+
+          <!-- 1) Titre / Date : libellés -->
+            <div class="row" style="margin-bottom:2px;">
+              <div class="col-6"><strong>Title</strong></div>
+              <div class="col-6"><strong>Date</strong></div>
+            </div>
+            
+            <!-- 1) Titre / Date : valeurs -->
+            <div class="row" style="margin-bottom:10px;">
+              <div class="col-6">
+                <span t-esc="o.title or ''"/>
+              </div>
+              <div class="col-6">
+                <span t-field="o.create_date" t-options='{"widget":"datetime"}'/>
+              </div>
+            </div>
+            
+            <!-- 2) Produit / Lot / Nombre de pièce : libellés -->
+            <div class="row" style="margin-bottom:2px;">
+              <div class="col-6"><strong>Product</strong></div>
+              <div class="col-3"><strong>Quantity</strong></div>
+              <div class="col-3"><strong>Lot</strong></div>
+            </div>
+            
+            <!-- 2) Produit / Lot / Nombre de pièce : valeurs -->
+            <div class="row" style="margin-bottom:10px;">
+              <div class="col-6">
+                <span t-esc="o.product_id.display_name if o.product_id else ''"/>
+              </div>
+              <div class="col-3">
+                <span t-esc="o.lot_id.name if o.lot_id else ''"/>
+              </div>
+              <div class="col-3">
+                <t t-if="'piece_qty' in o._fields">
+                  <span t-esc="o.piece_qty or 0"/>
+                </t>
+              </div>
+            </div>
+            
+            <!-- 3) Criticité / Type de demande : libellés -->
+            <div class="row" style="margin-bottom:2px;">
+              <div class="col-6"><strong>Criticity</strong></div>
+              <div class="col-6"><strong>Demand</strong></div>
+            </div>
+            
+            <!-- 3) Criticité / Type de demande : valeurs -->
+            <div class="row" style="margin-bottom:10px;">
+              <div class="col-6">
+                <t t-if="'criticality' in o._fields and o.criticality">
+                  <span t-esc="dict(o._fields['criticality'].selection).get(o.criticality, o.criticality)"/>
+                </t>
+              </div>
+              <div class="col-6">
+                <t t-if="'request_type' in o._fields and o.request_type">
+                  <span t-esc="dict(o._fields['request_type'].selection).get(o.request_type, o.request_type)"/>
+                </t>
+              </div>
+            </div>
+
+
+          <h3 style="margin-top: 0;">Issue Description</h3>
+          <div style="border: 1px solid #ddd; padding: 10px; min-height: 250px;">
+            <t t-if="o.description">
+              <t t-esc="o.description"/>
+            </t>
+            <t t-else="">
+              <em>Aucune note.</em>
+            </t>
+          </div>
+            <br/>
+          <h3 style="margin-top: 0;">Corrective action</h3>
+          <div style="border: 1px solid #ddd; padding: 10px; min-height: 250px;">
+            <t t-if="o.action_corrective">
+              <t t-esc="o.action_corrective"/>
+            </t>
+            <t t-else="">
+              <em>Aucune note.</em>
+            </t>
+          </div>
+
+        </div>
+      </t>
+    </t>
+  </t>
+</template>
+
+</odoo>

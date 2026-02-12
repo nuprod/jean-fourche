@@ -1,0 +1,78 @@
+<odoo>
+  <record id="quality_alert_view_form_inherit_supplier_top" model="ir.ui.view">
+    <field name="name">quality.alert.form.inherit.supplier.top</field>
+    <field name="model">quality.alert</field>
+
+    <!-- Mets l'xml_id réel de la vue d'origine -->
+    <field name="inherit_id" ref="quality_control.quality_alert_view_form"/>
+
+    <field name="arch" type="xml">
+
+      <!-- Ajout dans la zone haute, colonne droite -->
+      <xpath expr="//sheet/group/group[field[@name='team_id']]" position="inside">
+        <separator string="Fournisseur / Achat" colspan="2"/>
+
+        <field name="partner_id"
+               options="{'no_create': True}"/>
+
+        <field name="supplier_quality_contact_id"
+               invisible="not partner_id"
+               options="{'no_create': True}"/>
+
+        <field name="purchase_id"
+               options="{'no_create': True}"
+               invisible="not picking_id"/>
+
+        <separator string="Détails" colspan="2"/>
+        <field name="piece_qty"/>
+        <field name="lot_id"/>
+        <field name="criticality"/>
+        <field name="request_type"/>
+      </xpath>
+
+      <!-- (Optionnel) masquer partner_id dans le notebook pour éviter doublon -->
+      <xpath expr="//page[@name='miscellaneous']//field[@name='partner_id']" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
+        <xpath expr="//field[@name='lot_id']" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
+
+    </field>
+  </record>
+
+  <record id="quality_alert_view_form_hide_fields" model="ir.ui.view">
+    <field name="name">quality.alert.form.hide.unwanted.fields</field>
+    <field name="model">quality.alert</field>
+    <field name="inherit_id" ref="quality_control.quality_alert_view_form"/>
+    <field name="arch" type="xml">
+
+
+
+
+
+      <!-- Cause première -->
+      <xpath expr="//field[@name='reason_id']" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
+
+      <!-- Priorité -->
+      <xpath expr="//field[@name='priority']" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
+
+    </field>
+  </record>
+  <record id="quality_alert_view_form_hide_fields_2" model="ir.ui.view">
+    <field name="name">quality.alert.form.hide.unwanted.fields2</field>
+    <field name="model">quality.alert</field>
+    <field name="inherit_id" ref="quality_mrp_workorder.quality_alert_view_form_inherit_mrp"/>
+    <field name="arch" type="xml">
+              <!-- Poste de travail -->
+      <xpath expr="//field[@name='workcenter_id']" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
+    </field>
+  </record>
+    
+</odoo>
