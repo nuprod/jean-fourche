@@ -1,0 +1,26 @@
+<odoo>
+  <record id="mail_template_quality_alert" model="mail.template">
+    <field name="name">Quality Alert - Envoi fournisseur</field>
+    <field name="model_id" ref="quality_control.model_quality_alert"/>
+    <field name="subject">Alerte qualité - ${object.name or ''}</field>
+    <field name="email_from">${(user.email_formatted or user.company_id.email_formatted or '')|safe}</field>
+    <field name="partner_to">${object.supplier_quality_contact_id.id}</field>
+    <field name="body_html" type="html">
+      <div>
+        <p>Bonjour,</p>
+        <p>
+          Veuillez trouver ci-joint le formulaire PDF de l'alerte qualité
+          <strong><t t-out="object.name"/></strong>.
+        </p>
+        <p>
+          Titre : <t t-out="object.title or ''"/><br/>
+          Produit : <t t-out="object.product_id.display_name if object.product_id else ''"/>
+        </p>
+        <p>Cordialement.</p>
+      </div>
+    </field>
+    <field name="report_template_ids" eval="[(4, ref('jf_quality.action_report_quality_alert'))]"/>
+    <field name="auto_delete" eval="True"/>
+    <field name="lang">${object.partner_id.lang}</field>
+  </record>
+</odoo>
