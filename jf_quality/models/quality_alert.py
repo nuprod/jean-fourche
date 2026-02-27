@@ -80,7 +80,9 @@ class QualityAlert(models.Model):
         )
 
         self.message_post(
-            body=_("Email d'alerte qualité envoyé à %(email)s.", email=recipient.email)
+            body=_("Email d'alerte qualité envoyé à %s.") % recipient.email,
+            message_type="comment",
+            subtype_xmlid="mail.mt_note",   # ou "mail.mt_comment"
         )
 
         return {
