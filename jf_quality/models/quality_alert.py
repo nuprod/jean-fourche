@@ -2,6 +2,9 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
+import logging
+_logger = logging.getLogger(__name__)
+
 
 class QualityAlert(models.Model):
     _inherit = "quality.alert"
@@ -57,45 +60,45 @@ class QualityAlert(models.Model):
         help="Contact qualité rattaché au fournisseur (contact enfant).",
     )
 
+
     def action_send_quality_alert(self):
         self.ensure_one()
-
+    
         recipient = self.supplier_quality_contact_id
-        if not recipient:
-            raise UserError(_("Veuillez renseigner un contact qualité fournisseur."))
-
-        if not recipient.email:
-            raise UserError(_("Le contact qualité sélectionné ne possède pas d'adresse email."))
-
+        if not recipient or not recipient.email:
+            raise UserError(_("Veuillez renseigner un contact qualité fournisseur avec email."))
+    
         template = self.env.ref("jf_quality.mail_template_quality_alert", raise_if_not_found=False)
         if not template:
             raise UserError(_("Le modèle d'email de l'alerte qualité est introuvable."))
 
-        template.send_mail(
+        _logger.info("TEMPLATE USED id=%s name=%r model=%s", template.id, template.name, template.model)
+        mail_id = template.send_mail(
             self.id,
-            force_send=True,
-            email_values={
-                "email_to": recipient.email,
-            },
+            force_send=False,  # IMPORTANT pour debug (évite suppression immédiate)
+            email_values={"email_to": recipient.email},
         )
-
-        self.message_post(
-            body=_("Email d'alerte qualité envoyé à %s.") % recipient.email,
-            message_type="comment",
-            subtype_xmlid="mail.mt_note",   # ou "mail.mt_comment"
+    
+        _logger.info("[QUALITY ALERT] send_mail returned mail_id=%r (type=%s)", mail_id, type(mail_id).__name__)
+    
+        if not mail_id:
+            _logger.warning("[QUALITY ALERT] No mail_id returned by send_mail()")
+            return {"type": "ir.actions.client", "tag": "reload"}
+    
+        mail = self.env["mail.mail"].sudo().browse(mail_id)
+        mail = mail.exists()
+    
+        if not mail:
+            _logger.warning("[QUALITY ALERT] mail.mail(%s) not found (deleted or never created)", mail_id)
+            return {"type": "ir.actions.client", "tag": "reload"}
+    
+        body = mail.body_html or ""
+        _logger.info(
+            "[QUALITY ALERT] mail found id=%s state=%s to=%r subject=%r body_html(first_500)=%r",
+            mail.id, mail.state, mail.email_to, mail.subject, body[:500],
         )
-
-        return {
-            "type": "ir.actions.client",
-            "tag": "display_notification",
-            "params": {
-                "title": _("Email envoyé"),
-                "message": _("L'alerte qualité a été envoyée à %s.") % recipient.email,
-                "type": "success",
-                "sticky": False,
-            },
-        }
-
+    
+        return {"type": "ir.actions.client", "tag": "reload"}
 
     # -------------------------
     # ONCHANGE
