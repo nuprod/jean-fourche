@@ -60,24 +60,25 @@ class QualityAlert(models.Model):
     def action_send_quality_alert(self):
         self.ensure_one()
 
-        if not self.partner_id:
-            raise UserError(_("Veuillez renseigner un fournisseur dans le champ partenaire."))
+        recipient = self.supplier_quality_contact_id
+        if not recipient:
+            raise UserError(_("Veuillez renseigner un contact qualité fournisseur."))
 
-        if not self.partner_id.email:
-            raise UserError(_("Le partenaire sélectionné ne possède pas d'adresse email."))
+        if not recipient.email:
+            raise UserError(_("Le contact qualité sélectionné ne possède pas d'adresse email."))
 
         template = self.env.ref("jf_quality.mail_template_quality_alert", raise_if_not_found=False)
         if not template:
             raise UserError(_("Le modèle d'email de l'alerte qualité est introuvable."))
 
-        template.send_mail(
-            self.id,
+        self.message_post_with_template(
+            template.id,
+            email_layout_xmlid="mail.mail_notification_light",
+            email_values={
+                "email_to": recipient.email,
+                "partner_ids": [recipient.id],
+            },
             force_send=True,
-            email_values={"email_to": self.partner_id.email},
-        )
-
-        self.message_post(
-            body=_("Alerte qualité envoyée par email à %(email)s.", email=self.partner_id.email)
         )
 
         return {
@@ -85,13 +86,12 @@ class QualityAlert(models.Model):
             "tag": "display_notification",
             "params": {
                 "title": _("Email envoyé"),
-                "message": _("L'alerte qualité a été envoyée à %s.") % self.partner_id.email,
+                "message": _("L'alerte qualité a été envoyée à %s.") % recipient.email,
                 "type": "success",
                 "sticky": False,
             },
         }
 
-    
 
     # -------------------------
     # ONCHANGE
