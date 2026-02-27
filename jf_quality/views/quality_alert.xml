@@ -8,6 +8,13 @@
 
     <field name="arch" type="xml">
 
+      <xpath expr="//header" position="inside">
+        <button name="action_send_quality_alert"
+                type="object"
+                string="Envoyer Alerte"
+                class="btn-primary"/>
+      </xpath>
+
       <!-- Ajout dans la zone haute, colonne droite -->
       <xpath expr="//sheet/group/group[field[@name='team_id']]" position="inside">
         <separator string="Fournisseur / Achat" colspan="2"/>

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 class QualityAlert(models.Model):
@@ -56,7 +57,41 @@ class QualityAlert(models.Model):
         help="Contact qualité rattaché au fournisseur (contact enfant).",
     )
 
-    
+    def action_send_quality_alert(self):
+        self.ensure_one()
+
+        recipient = self.supplier_quality_contact_id
+        if not recipient:
+            raise UserError(_("Veuillez renseigner un contact qualité fournisseur."))
+
+        if not recipient.email:
+            raise UserError(_("Le contact qualité sélectionné ne possède pas d'adresse email."))
+
+        template = self.env.ref("jf_quality.mail_template_quality_alert", raise_if_not_found=False)
+        if not template:
+            raise UserError(_("Le modèle d'email de l'alerte qualité est introuvable."))
+
+        self.message_post_with_template(
+            template.id,
+            email_layout_xmlid="mail.mail_notification_light",
+            email_values={
+                "email_to": recipient.email,
+                "partner_ids": [recipient.id],
+            },
+            force_send=True,
+        )
+
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "title": _("Email envoyé"),
+                "message": _("L'alerte qualité a été envoyée à %s.") % recipient.email,
+                "type": "success",
+                "sticky": False,
+            },
+        }
+
 
     # -------------------------
     # ONCHANGE
