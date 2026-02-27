@@ -71,14 +71,16 @@ class QualityAlert(models.Model):
         if not template:
             raise UserError(_("Le modèle d'email de l'alerte qualité est introuvable."))
 
-        self.message_post_with_template(
-            template.id,
-            email_layout_xmlid="mail.mail_notification_light",
+        template.send_mail(
+            self.id,
+            force_send=True,
             email_values={
                 "email_to": recipient.email,
-                "partner_ids": [recipient.id],
             },
-            force_send=True,
+        )
+
+        self.message_post(
+            body=_("Email d'alerte qualité envoyé à %(email)s.", email=recipient.email)
         )
 
         return {
