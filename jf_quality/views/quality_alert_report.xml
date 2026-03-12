@@ -44,8 +44,8 @@
             <!-- 2) Produit / Lot / Nombre de pièce : libellés -->
             <div class="row" style="margin-bottom:2px;">
               <div class="col-6"><strong>Product</strong></div>
-              <div class="col-3"><strong>Quantity</strong></div>
               <div class="col-3"><strong>Lot</strong></div>
+              <div class="col-3"><strong>Quantity</strong></div>
             </div>
             
             <!-- 2) Produit / Lot / Nombre de pièce : valeurs -->
@@ -90,7 +90,7 @@
               <t t-esc="o.description"/>
             </t>
             <t t-else="">
-              <em>Aucune note.</em>
+              <em>Aucune note/No comment</em>
             </t>
           </div>
             <br/>
@@ -100,9 +100,20 @@
               <t t-esc="o.action_corrective"/>
             </t>
             <t t-else="">
-              <em>Aucune note.</em>
+              <em>Aucune note/No comment</em>
             </t>
           </div>
+          <div style="page-break-inside: avoid; break-inside: avoid;">
+    <h3 style="margin-top: 0;">Preventive action</h3>
+    <div style="border: 1px solid #ddd; padding: 10px; min-height: 250px; page-break-inside: avoid; break-inside: avoid;">
+        <t t-if="o.action_preventive">
+            <t t-esc="o.action_preventive"/>
+        </t>
+        <t t-else="">
+            <em>Aucune note/No comment</em>
+        </t>
+    </div>
+</div>
 
         </div>
       </t>

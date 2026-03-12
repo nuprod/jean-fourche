@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from datetime import timedelta
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -63,42 +64,60 @@ class QualityAlert(models.Model):
 
     def action_send_quality_alert(self):
         self.ensure_one()
-    
+
         recipient = self.supplier_quality_contact_id
         if not recipient or not recipient.email:
             raise UserError(_("Veuillez renseigner un contact qualité fournisseur avec email."))
-    
+
         template = self.env.ref("jf_quality.mail_template_quality_alert", raise_if_not_found=False)
         if not template:
             raise UserError(_("Le modèle d'email de l'alerte qualité est introuvable."))
 
-        _logger.info("TEMPLATE USED id=%s name=%r model=%s", template.id, template.name, template.model)
-        mail_id = template.send_mail(
-            self.id,
-            force_send=False,  # IMPORTANT pour debug (évite suppression immédiate)
-            email_values={"email_to": recipient.email},
+        compose_form = self.env.ref("mail.email_compose_message_wizard_form", raise_if_not_found=False)
+        if not compose_form:
+            raise UserError(_("Le formulaire standard de composition d'email est introuvable."))
+
+        followers = self.message_partner_ids.filtered(
+            lambda p: p.email and p.id != recipient.id
         )
-    
-        _logger.info("[QUALITY ALERT] send_mail returned mail_id=%r (type=%s)", mail_id, type(mail_id).__name__)
-    
-        if not mail_id:
-            _logger.warning("[QUALITY ALERT] No mail_id returned by send_mail()")
-            return {"type": "ir.actions.client", "tag": "reload"}
-    
-        mail = self.env["mail.mail"].sudo().browse(mail_id)
-        mail = mail.exists()
-    
-        if not mail:
-            _logger.warning("[QUALITY ALERT] mail.mail(%s) not found (deleted or never created)", mail_id)
-            return {"type": "ir.actions.client", "tag": "reload"}
-    
-        body = mail.body_html or ""
-        _logger.info(
-            "[QUALITY ALERT] mail found id=%s state=%s to=%r subject=%r body_html(first_500)=%r",
-            mail.id, mail.state, mail.email_to, mail.subject, body[:500],
-        )
-    
-        return {"type": "ir.actions.client", "tag": "reload"}
+
+        ctx = {
+            "default_model": self._name,
+            "default_res_ids": [self.id],
+            "default_composition_mode": "comment",
+            "default_template_id": template.id,
+            "default_partner_ids": [recipient.id],      # To
+            "default_partner_cc_ids": followers.ids,    # CC
+            "default_email_layout_xmlid": "mail.mail_notification_light",
+            "force_email": True,
+        }
+
+        activity_type = self.env.ref("mail.mail_activity_data_todo", raise_if_not_found=False)
+        if activity_type:
+            existing_activity = self.activity_ids.filtered(
+                lambda a: a.activity_type_id.id == activity_type.id
+                and a.user_id.id == self.env.user.id
+                and a.summary == _("Relancer le fournisseur pour l'alerte qualité")
+                and not a.date_done
+            )
+            if not existing_activity:
+                self.activity_schedule(
+                    activity_type_id=activity_type.id,
+                    date_deadline=fields.Date.today() + timedelta(days=7),
+                    summary=_("Relancer le fournisseur pour l'alerte qualité"),
+                    note=_("Vérifier la réponse du fournisseur suite à l'alerte qualité envoyée."),
+                    user_id=self.env.user.id,
+                )
+
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Envoyer l'alerte qualité"),
+            "res_model": "mail.compose.message",
+            "view_mode": "form",
+            "views": [(compose_form.id, "form")],
+            "target": "new",
+            "context": ctx,
+        }
 
     # -------------------------
     # ONCHANGE
