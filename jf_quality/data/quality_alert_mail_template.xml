@@ -2,21 +2,94 @@
   <record id="mail_template_quality_alert" model="mail.template">
     <field name="name">Quality Alert - Envoi fournisseur</field>
     <field name="model_id" ref="quality_control.model_quality_alert"/>
-    <field name="subject">Alerte qualité - {{object.title}}</field>
-    <field name="email_from">{{object.company_id.email}}</field>
-    <field name="partner_to">{{object.supplier_quality_contact_id.id}}</field>
+    <field name="subject">[Jean Fourche] {{ object.name }} - {{ object.title }}</field>
+    <field name="email_from">{{ object.company_id.email }}</field>
+    <field name="partner_to">{{ object.supplier_quality_contact_id.id }}</field>
     <field name="body_html" type="html">
       <div>
         <p>Bonjour,</p>
+
         <p>
-          Veuillez trouver ci-joint le formulaire PDF de l'alerte qualité
+          Je te prie de bien vouloir trouver en pièce jointe l'alerte qualité
           <strong><t t-out="object.name"/></strong>.
         </p>
+
         <p>
           Titre : <t t-out="object.title or ''"/><br/>
           Produit : <t t-out="object.product_id.display_name if object.product_id else ''"/>
         </p>
-        <p>Cordialement.</p>
+
+        <p>Merci de bien vouloir respecter les délais suivants:</p>
+
+        <ul>
+          <li>Réponse sous 7 jours</li>
+          <li>Édition de l'avoir ou expédition des pièces de remplacement sous 15 jours.</li>
+          <li>
+            Passé ce délai de 15 jours, l’alerte qualité sera réputée acceptée,
+            sur la base d’un accord tacite de votre part.
+          </li>
+        </ul>
+
+        <p>Si le traitement nécessite une reprise de la marchandise de votre part:</p>
+
+        <ul>
+          <li>
+            Un délai complémentaire de 15 jours sera octroyé pour le transport
+            et l'analyse du problème.
+          </li>
+          <li>Les frais de transport retour seront intégralement à votre charge.</li>
+        </ul>
+
+        <p>Cordialement,</p>
+
+        <p>
+          Pierre du service qualité<br/>
+          pierre@jeanfourche.fr<br/>
+          07-43-54-37-87
+        </p>
+
+        <hr style="margin: 24px 0;"/>
+
+        <p>Dear,</p>
+
+        <p>
+          Please find attached quality alert
+          <strong><t t-out="object.name"/></strong>.
+        </p>
+
+        <p>
+          Title: <t t-out="object.title or ''"/><br/>
+          Product: <t t-out="object.product_id.display_name if object.product_id else ''"/>
+        </p>
+
+        <p>Please respect the following deadlines:</p>
+
+        <ul>
+          <li>Response within 7 days.</li>
+          <li>Edited credit note or dispatch of replacement parts within 15 days.</li>
+          <li>
+            After this 15-day period, the quality alert shall be considered accepted,
+            based on your tacit agreement.
+          </li>
+        </ul>
+
+        <p>If the process requires you to return the goods:</p>
+
+        <ul>
+          <li>
+            An additional period of 15 days will be granted for transport and analysis
+            of the problem.
+          </li>
+          <li>You will be fully responsible for the return shipping costs.</li>
+        </ul>
+
+        <p>Kind regards,</p>
+
+        <p>
+          Pierre from the Quality department<br/>
+          pierre@jeanfourche.fr<br/>
+          07-43-54-37-87
+        </p>
       </div>
     </field>
     <field name="report_template_ids" eval="[(4, ref('jf_quality.action_report_quality_alert'))]"/>
