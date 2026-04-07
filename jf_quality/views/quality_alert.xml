@@ -13,6 +13,16 @@
                 type="object"
                 string="Envoyer Alerte"
                 class="btn-primary"/>
+        <button name="action_create_supplier_return"
+                type="object"
+                string="Retour fournisseur"
+                class="btn-secondary"
+                invisible="supplier_return_picking_id or not partner_id or not product_id"/>
+        <button name="action_open_supplier_return"
+                type="object"
+                string="Voir retour fournisseur"
+                class="btn-secondary"
+                invisible="not supplier_return_picking_id"/>
       </xpath>
 
       <!-- Ajout dans la zone haute, colonne droite -->
@@ -35,6 +45,7 @@
         <field name="lot_id"/>
         <field name="criticality"/>
         <field name="request_type"/>
+        <field name="supplier_return_picking_id" readonly="1"/>
       </xpath>
 
       <!-- (Optionnel) masquer partner_id dans le notebook pour éviter doublon -->

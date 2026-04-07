@@ -2,6 +2,7 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from datetime import timedelta
+from collections import defaultdict
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -61,6 +62,13 @@ class QualityAlert(models.Model):
         help="Contact qualité rattaché au fournisseur (contact enfant).",
     )
 
+    supplier_return_picking_id = fields.Many2one(
+        comodel_name="stock.picking",
+        string="Retour fournisseur",
+        readonly=True,
+        copy=False,
+    )
+
 
     def action_send_quality_alert(self):
         self.ensure_one()
@@ -117,6 +125,127 @@ class QualityAlert(models.Model):
             "views": [(compose_form.id, "form")],
             "target": "new",
             "context": ctx,
+        }
+
+    def action_create_supplier_return(self):
+        self.ensure_one()
+
+        if self.supplier_return_picking_id:
+            return self.action_open_supplier_return()
+
+        if not self.partner_id:
+            raise UserError(_("Veuillez renseigner un fournisseur sur l'alerte qualité."))
+        if not self.product_id:
+            raise UserError(_("Veuillez renseigner un produit sur l'alerte qualité."))
+        if self.piece_qty <= 0:
+            raise UserError(_("La quantité à retourner doit être strictement positive."))
+
+        picking_type_id = self.env["ir.config_parameter"].sudo().get_param("jf_quality.supplier_return_picking_type_id")
+        picking_type = self.env["stock.picking.type"].browse(int(picking_type_id)) if picking_type_id else self.env["stock.picking.type"]
+        if not picking_type:
+            raise UserError(_("Veuillez configurer le type d'opération de retour fournisseur dans les paramètres."))
+
+        location_dest = self.env.ref("stock.stock_location_suppliers", raise_if_not_found=False)
+        if not location_dest:
+            raise UserError(_("La localisation fournisseur n'a pas été trouvée."))
+
+        location_src = picking_type.default_location_src_id
+        if not location_src:
+            raise UserError(_("Le type d'opération configuré doit définir une localisation source."))
+
+        picking = self.env["stock.picking"].create({
+            "partner_id": self.partner_id.id,
+            "picking_type_id": picking_type.id,
+            "location_id": location_src.id,
+            "location_dest_id": location_dest.id,
+            "origin": self.name,
+        })
+
+        move = self.env["stock.move"].create({
+            "name": self.product_id.display_name,
+            "product_id": self.product_id.id,
+            "product_uom_qty": self.piece_qty,
+            "product_uom": self.product_id.uom_id.id,
+            "picking_id": picking.id,
+            "location_id": location_src.id,
+            "location_dest_id": location_dest.id,
+            "partner_id": self.partner_id.id,
+            "origin": self.name,
+        })
+
+        move_line_values = self._prepare_supplier_return_move_lines(move, self.piece_qty)
+        if move_line_values:
+            self.env["stock.move.line"].create(move_line_values)
+
+        self.supplier_return_picking_id = picking
+
+        return self.action_open_supplier_return()
+
+    def action_open_supplier_return(self):
+        self.ensure_one()
+        if not self.supplier_return_picking_id:
+            raise UserError(_("Aucun retour fournisseur n'est lié à cette alerte."))
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Retour fournisseur"),
+            "res_model": "stock.picking",
+            "view_mode": "form",
+            "res_id": self.supplier_return_picking_id.id,
+        }
+
+    def _prepare_supplier_return_move_lines(self, move, qty):
+        self.ensure_one()
+        product = self.product_id
+        tracking = product.tracking
+        if tracking == "none":
+            return []
+
+        if self.lot_id:
+            if tracking == "serial" and qty != 1:
+                raise UserError(_("Un produit suivi par numéro de série doit être retourné avec une quantité de 1."))
+            return [self._prepare_supplier_return_move_line(move, qty, self.lot_id)]
+
+        done_lines = self.picking_id.move_line_ids.filtered(
+            lambda ml: ml.product_id == product and ml.qty_done > 0 and ml.lot_id
+        )
+        if not done_lines:
+            raise UserError(_("Aucun numéro de lot/série trouvé sur la réception d'origine pour ce produit."))
+
+        remaining_qty = float(qty)
+        values = []
+        aggregated_qty = defaultdict(float)
+        serial_ids = []
+        for line in done_lines:
+            if remaining_qty <= 0:
+                break
+            line_qty = min(line.qty_done, remaining_qty)
+            if tracking == "serial":
+                serial_ids.append(line.lot_id)
+                remaining_qty -= 1
+            else:
+                aggregated_qty[line.lot_id] += line_qty
+                remaining_qty -= line_qty
+
+        if remaining_qty > 0:
+            raise UserError(_("Impossible de préparer le retour: quantité insuffisante avec lot/série sur la réception."))
+
+        if tracking == "serial":
+            return [self._prepare_supplier_return_move_line(move, 1, lot) for lot in serial_ids]
+
+        for lot, lot_qty in aggregated_qty.items():
+            values.append(self._prepare_supplier_return_move_line(move, lot_qty, lot))
+        return values
+
+    def _prepare_supplier_return_move_line(self, move, qty, lot):
+        return {
+            "move_id": move.id,
+            "picking_id": move.picking_id.id,
+            "product_id": move.product_id.id,
+            "product_uom_id": move.product_uom.id,
+            "qty_done": qty,
+            "location_id": move.location_id.id,
+            "location_dest_id": move.location_dest_id.id,
+            "lot_id": lot.id,
         }
 
     # -------------------------

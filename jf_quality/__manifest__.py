@@ -23,7 +23,7 @@ Amélioration du module qualité
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','quality_control'],
+    'depends': ['base', 'quality_control', 'stock'],
 
     # always loaded
     'data': [
@@ -33,10 +33,10 @@ Amélioration du module qualité
         'views/quality_alert_report.xml',
         'data/quality_alert_mail_template.xml',
         'views/quality_alert.xml',
+        'views/res_config_settings.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
     ],
 }
-
