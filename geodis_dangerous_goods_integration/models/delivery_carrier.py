@@ -1,6 +1,9 @@
 import json
+import logging
 
 from odoo import models
+
+_logger = logging.getLogger("GEODIS")
 
 
 class DeliveryCarrier(models.Model):
@@ -19,6 +22,11 @@ class DeliveryCarrier(models.Model):
 
         dangerous_goods = pickings._build_geodis_dangerous_goods_list()
         if not dangerous_goods:
+            _logger.info(
+                ">>>>>Dangerous Goods [%s]: aucune matière dangereuse détectée, "
+                "listMatieresDangereuses non injectée.",
+                pickings.name,
+            )
             return request_payload
 
         list_envois = payload.get('listEnvois') or []
@@ -26,4 +34,11 @@ class DeliveryCarrier(models.Model):
             return request_payload
 
         list_envois[0]['listMatieresDangereuses'] = dangerous_goods
-        return json.dumps(payload)
+        final_payload = json.dumps(payload)
+        _logger.info(
+            ">>>>>Shipping Request Data WITH Dangerous Goods [%s] (%d matière(s)) ::::%s",
+            pickings.name,
+            len(dangerous_goods),
+            final_payload,
+        )
+        return final_payload
