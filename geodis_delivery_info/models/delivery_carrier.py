@@ -1,7 +1,7 @@
 import json
 import logging
 
-from odoo import models
+from odoo import fields, models
 
 _logger = logging.getLogger("GEODIS")
 
@@ -26,6 +26,10 @@ class DeliveryCarrier(models.Model):
         if not list_envois:
             return request_payload
 
+        # Remplacement par la date du jour
+        list_envois[0]['dateDepartEnlevement'] = fields.Date.context_today(self).strftime("%Y-%m-%d")
+
+        # Injection de l'information de livraison
         instruction = pickings.delivery_info or ''
         list_envois[0]['instructionLivraison'] = instruction
 
