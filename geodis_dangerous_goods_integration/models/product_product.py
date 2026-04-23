@@ -1,11 +1,11 @@
 from odoo import fields, models
 
 
-class ProductTemplate(models.Model):
-    _inherit = 'product.template'
+class ProductProduct(models.Model):
+    _inherit = 'product.product'
 
     dangerous_goods_line_ids = fields.One2many(
         'product.dangerous.goods.line',
-        'product_tmpl_id',
+        'product_id',
         string='Dangerous Goods Lines',
     )
