@@ -6,9 +6,9 @@ class ProductDangerousGoodsLine(models.Model):
     _description = 'Product Dangerous Goods Line'
     _order = 'no_onu, id'
 
-    product_tmpl_id = fields.Many2one(
-        'product.template',
-        string='Product Template',
+    product_id = fields.Many2one(
+        'product.product',
+        string='Product Variant',
         required=True,
         ondelete='cascade',
     )

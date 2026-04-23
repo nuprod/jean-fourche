@@ -15,19 +15,18 @@ class StockPicking(models.Model):
     @api.depends(
         'package_ids',
         'package_ids.name',
-        'move_line_ids.qty_done',
+        'move_line_ids.quantity',
         'move_line_ids.result_package_id',
         'move_line_ids.product_id',
-        'move_line_ids.product_id.product_tmpl_id',
-        'move_line_ids.product_id.product_tmpl_id.dangerous_goods_line_ids',
-        'move_line_ids.product_id.product_tmpl_id.dangerous_goods_line_ids.no_onu',
-        'move_line_ids.product_id.product_tmpl_id.dangerous_goods_line_ids.groupe_emballage',
-        'move_line_ids.product_id.product_tmpl_id.dangerous_goods_line_ids.classe_adr',
-        'move_line_ids.product_id.product_tmpl_id.dangerous_goods_line_ids.code_type_emballage',
-        'move_line_ids.product_id.product_tmpl_id.dangerous_goods_line_ids.nom_technique',
-        'move_line_ids.product_id.product_tmpl_id.dangerous_goods_line_ids.code_quantite',
-        'move_line_ids.product_id.product_tmpl_id.dangerous_goods_line_ids.danger_env',
-        'move_line_ids.product_id.product_tmpl_id.dangerous_goods_line_ids.poids_matiere_dangereuse',
+        'move_line_ids.product_id.dangerous_goods_line_ids',
+        'move_line_ids.product_id.dangerous_goods_line_ids.no_onu',
+        'move_line_ids.product_id.dangerous_goods_line_ids.groupe_emballage',
+        'move_line_ids.product_id.dangerous_goods_line_ids.classe_adr',
+        'move_line_ids.product_id.dangerous_goods_line_ids.code_type_emballage',
+        'move_line_ids.product_id.dangerous_goods_line_ids.nom_technique',
+        'move_line_ids.product_id.dangerous_goods_line_ids.code_quantite',
+        'move_line_ids.product_id.dangerous_goods_line_ids.danger_env',
+        'move_line_ids.product_id.dangerous_goods_line_ids.poids_matiere_dangereuse',
     )
     def _compute_dangerous_goods_json(self):
         for picking in self:
@@ -42,14 +41,14 @@ class StockPicking(models.Model):
             return packaged_quantities
 
         packaged_move_lines = self.move_line_ids.filtered(
-            lambda ml: ml.result_package_id in package_ids and ml.qty_done > 0 and ml.product_id
+            lambda ml: ml.result_package_id in package_ids and ml.quantity > 0 and ml.product_id
         )
 
         for move_line in packaged_move_lines:
             package = move_line.result_package_id
             package_bucket = packaged_quantities.setdefault(package, {})
-            product_tmpl = move_line.product_id.product_tmpl_id
-            package_bucket[product_tmpl] = package_bucket.get(product_tmpl, 0.0) + move_line.qty_done
+            product = move_line.product_id
+            package_bucket[product] = package_bucket.get(product, 0.0) + move_line.qty_done
 
         return packaged_quantities
 
@@ -58,8 +57,8 @@ class StockPicking(models.Model):
         aggregated = {}
 
         for package, products_qty in self._get_packaged_quantities_by_package().items():
-            for product_tmpl, qty in products_qty.items():
-                for adr_line in product_tmpl.dangerous_goods_line_ids:
+            for product, qty in products_qty.items():
+                for adr_line in product.dangerous_goods_line_ids:
                     onu_key = adr_line.no_onu
                     if not onu_key:
                         continue

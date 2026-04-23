@@ -16,16 +16,16 @@ class StockQuantPackage(models.Model):
             move_lines = self.env['stock.move.line'].search([
                 ('result_package_id', '=', package.id),
                 ('state', 'not in', ['done', 'cancel']),
-                ('qty_done', '>', 0),
+                ('quantity', '>', 0),
             ])
             if move_lines:
                 package.contains_dangerous_goods = any(
-                    ml.product_id.product_tmpl_id.dangerous_goods_line_ids
+                    ml.product_id.dangerous_goods_line_ids
                     for ml in move_lines
                 )
             else:
                 # Fallback : quants réels en stock (après validation du picking)
                 package.contains_dangerous_goods = any(
-                    quant.product_id.product_tmpl_id.dangerous_goods_line_ids
+                    quant.product_id.dangerous_goods_line_ids
                     for quant in package.quant_ids
                 )
