@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_partner_form_delivery_info" model="ir.ui.view">
+            <field name="name">res.partner.form.delivery.info</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <!--
+                    Ajout du champ "Information de livraison" directement visible
+                    sur la fiche partenaire, après les champs d'adresse (street2).
+                -->
+                <xpath expr="//field[@name='street2']" position="after">
+                    <field name="delivery_info"
+                           placeholder="Information de livraison (ex : sonner à l'interphone B, dépôt en réception)..."
+                           widget="text"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
