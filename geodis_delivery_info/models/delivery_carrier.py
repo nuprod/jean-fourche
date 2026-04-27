@@ -29,6 +29,13 @@ class DeliveryCarrier(models.Model):
         # Remplacement par la date du jour
         list_envois[0]['dateDepartEnlevement'] = fields.Date.context_today(self).strftime("%Y-%m-%d")
 
+        # Si l'option de livraison est Date de livraison souhaité, ajouté la date de livraison avec comme règle Date du jours + 1
+        # Cela coche en automatique l'option Livraison au plus tôt.
+        if list_envois[0].option_livraison == "DSL":
+            date_livraison = fields.Date.context_today(self) + timedelta(days=1)
+            date_livraison_str = date_livraison.strftime("%Y-%m-%d")
+            list_envois[0]['dateLivraison'] = date_livraison
+            
         # Injection de l'information de livraison
         instruction = pickings.delivery_info or ''
         list_envois[0]['instructionLivraison'] = instruction
