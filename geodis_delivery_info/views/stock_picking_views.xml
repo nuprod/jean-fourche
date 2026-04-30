@@ -11,6 +11,7 @@
                     livraison, après le champ partenaire de livraison.
                 -->
                 <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="date_enlevement_souhaitee_jf"/>
                     <field name="delivery_info"
                            placeholder="Information de livraison (ex : sonnez à l'interphone B, dépôt en réception)..."
                            widget="text"/>
