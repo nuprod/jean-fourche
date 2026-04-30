@@ -4,6 +4,14 @@ from odoo import api, fields, models
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
+    date_enlevement_souhaitee_jf = fields.Date(
+        string="Date d'enlèvement souhaitée",
+        help=(
+            "Date d'enlèvement souhaitée transmise à Geodis dans le champ "
+            "dateDepartEnlevement. Si non renseignée, la date du jour est utilisée."
+        ),
+    )
+
     delivery_info = fields.Text(
         string="Information de livraison",
         help=(
