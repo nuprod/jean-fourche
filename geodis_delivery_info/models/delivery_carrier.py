@@ -10,6 +10,15 @@ _logger = logging.getLogger("GEODIS")
 class DeliveryCarrier(models.Model):
     _inherit = 'delivery.carrier'
 
+    def _geodis_next_working_day(self, date):
+        """Retourne date + 1 jour, décalé au lundi si le résultat tombe un week-end."""
+        next_day = date + timedelta(days=1)
+        if next_day.weekday() == 5:    # Samedi → Lundi
+            next_day += timedelta(days=2)
+        elif next_day.weekday() == 6:  # Dimanche → Lundi
+            next_day += timedelta(days=1)
+        return next_day
+
     def geodis_prepare_request_date(self, pickings):
         request_payload = super().geodis_prepare_request_date(pickings)
 
@@ -27,16 +36,21 @@ class DeliveryCarrier(models.Model):
         if not list_envois:
             return request_payload
 
-        # Remplacement par la date du jour
-        list_envois[0]['dateDepartEnlevement'] = fields.Date.context_today(self).strftime("%Y-%m-%d")
+        # Détermination de la base d'enlèvement
+        # Cas 1 : date saisie par l'utilisateur
+        # Cas 2 : fallback sur la date du jour
+        date_enlevement = (
+            pickings.date_enlevement_souhaitee_jf
+            or fields.Date.context_today(self)
+        )
 
-        # Si l'option de livraison est Date de livraison souhaité, ajouté la date de livraison avec comme règle Date du jours + 1
-        # Cela coche en automatique l'option Livraison au plus tôt.
-        if self.option_livraison == "DSL":
-            date_livraison = fields.Date.context_today(self) + timedelta(days=1)
-            date_livraison_str = date_livraison.strftime("%Y-%m-%d")
-            list_envois[0]['dateLivraison'] = date_livraison_str
-            
+        # dateDepartEnlevement
+        list_envois[0]['dateDepartEnlevement'] = date_enlevement.strftime("%Y-%m-%d")
+
+        # dateLivraison = base + 1 jour ouvré (jamais samedi ni dimanche)
+        date_livraison = self._geodis_next_working_day(date_enlevement)
+        list_envois[0]['dateLivraison'] = date_livraison.strftime("%Y-%m-%d")
+
         # Injection de l'information de livraison
         instruction = pickings.delivery_info or ''
         list_envois[0]['instructionLivraison'] = instruction

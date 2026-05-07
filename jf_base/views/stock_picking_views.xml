@@ -13,7 +13,10 @@
                     class="btn-secondary"
                     invisible="state not in ('confirmed', 'assigned')"
                 />
+                <button
+                  name="action_open_picking_client_action"                                                                                  string="Affichage scanette"                                                                                               type="object"                                                                                                             class="btn-secondary"                                                                                                     invisible="state in ('done', 'cancel')"                                                                                  />  
             </xpath>
         </field>
     </record>
+    
 </odoo>
