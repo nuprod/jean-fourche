@@ -36,20 +36,14 @@ class DeliveryCarrier(models.Model):
         if not list_envois:
             return request_payload
 
-        # Détermination de la base d'enlèvement
-        # Cas 1 : date saisie par l'utilisateur
-        # Cas 2 : fallback sur la date du jour
-        date_enlevement = (
-            pickings.date_enlevement_souhaitee_jf
-            or fields.Date.context_today(self)
-        )
+        # dateDepartEnlevement = date du jour
+        date_today = fields.Date.context_today(self)
+        list_envois[0]['dateDepartEnlevement'] = date_today.strftime("%Y-%m-%d")
 
-        # dateDepartEnlevement
-        list_envois[0]['dateDepartEnlevement'] = date_enlevement.strftime("%Y-%m-%d")
-
-        # dateLivraison = base + 1 jour ouvré (jamais samedi ni dimanche)
-        date_livraison = self._geodis_next_working_day(date_enlevement)
-        list_envois[0]['dateLivraison'] = date_livraison.strftime("%Y-%m-%d")
+        # dateLivraison = date saisie par l'utilisateur, ou J+1 ouvré par défaut
+        if not pickings.date_enlevement_souhaitee_jf:
+            pickings.date_enlevement_souhaitee_jf = self._geodis_next_working_day(date_today)
+        list_envois[0]['dateLivraison'] = pickings.date_enlevement_souhaitee_jf.strftime("%Y-%m-%d")
 
         # Injection de l'information de livraison
         instruction = pickings.delivery_info or ''
