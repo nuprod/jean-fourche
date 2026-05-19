@@ -5,10 +5,12 @@ class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     date_enlevement_souhaitee_jf = fields.Date(
-        string="Date d'enlèvement souhaitée",
+        string="Date de livraison souhaitée",
         help=(
-            "Date d'enlèvement souhaitée transmise à Geodis dans le champ "
-            "dateDepartEnlevement. Si non renseignée, la date du jour est utilisée."
+            "Date de livraison souhaitée transmise à Geodis dans le champ "
+            "dateLivraison. Pré-remplie automatiquement au prochain jour ouvré "
+            "lors de l'envoi à Geodis. Modifiable manuellement si Geodis rejette "
+            "la date proposée."
         ),
     )
 
