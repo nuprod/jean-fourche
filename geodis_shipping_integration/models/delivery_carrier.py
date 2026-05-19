@@ -39,10 +39,10 @@ class DeliveryCarrier(models.Model):
     def geodis_rate_shipment(self, order):
         return {'success': True, 'price': 0.0, 'error_message': False, 'warning_message': False}
 
-    def _geodis_volume_m3(self, length_mm, width_mm, height_mm):
-        """Calcule le volume en m³ à partir des dimensions en mm. Retourne 0.0 si une dimension est manquante."""
-        if length_mm and width_mm and height_mm:
-            return round((length_mm * width_mm * height_mm) / 1_000_000_000, 6)
+    def _geodis_volume_m3(self, length_cm, width_cm, height_cm):
+        """Calcule le volume en m³ à partir des dimensions en cm. Retourne 0.0 si une dimension est manquante."""
+        if length_cm and width_cm and height_cm:
+            return round((length_cm * width_cm * height_cm) / 1_000_000, 6)
         return 0.0
 
     def geodis_prepare_request_date(self, pickings):
