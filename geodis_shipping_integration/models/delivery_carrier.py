@@ -39,6 +39,12 @@ class DeliveryCarrier(models.Model):
     def geodis_rate_shipment(self, order):
         return {'success': True, 'price': 0.0, 'error_message': False, 'warning_message': False}
 
+    def _geodis_volume_m3(self, length_cm, width_cm, height_cm):
+        """Calcule le volume en m³ à partir des dimensions en cm. Retourne 0.0 si une dimension est manquante."""
+        if length_cm and width_cm and height_cm:
+            return round((length_cm * width_cm * height_cm) / 1_000_000, 6)
+        return 0.0
+
     def geodis_prepare_request_date(self, pickings):
         """
         prepare data dictionary to send geodis
@@ -58,28 +64,36 @@ class DeliveryCarrier(models.Model):
         parcel_data = []
         total_bulk_weight = pickings.weight_bulk
         for package_id in pickings.package_ids:
+            pkg_type = package_id.package_type_id
+            length = pkg_type and pkg_type.packaging_length or 0
+            width = pkg_type and pkg_type.width or 0
+            height = pkg_type and pkg_type.height or 0
             parcel_data.append({
                 "palette": "False",
                 "paletteConsignee": "False",
                 "quantite": 1,
                 "poids": package_id.shipping_weight,
-                "volume": 0.1,
-                "longueurUnitaire": package_id.package_type_id and package_id.package_type_id.packaging_length or 0,
-                "largeurUnitaire": package_id.package_type_id.width or 0,
-                "hauteurUnitaire": package_id.package_type_id.height or 0,
+                "volume": self._geodis_volume_m3(length, width, height),
+                "longueurUnitaire": length,
+                "largeurUnitaire": width,
+                "hauteurUnitaire": height,
                 "referenceColis": ""
             })
         if total_bulk_weight:
+            bulk_length = int(self.geodis_package_id.packaging_length or 0)
+            bulk_width = int(self.geodis_package_id.width or 0)
+            bulk_height = int(self.geodis_package_id.height or 0)
+            bulk_volume = self._geodis_volume_m3(bulk_length, bulk_width, bulk_height)
             for number in range(pickings.number_of_label):
                 parcel_data.append({
                     "palette": "False",
                     "paletteConsignee": "False",
                     "quantite": 1,
-                    "poids": round(total_bulk_weight / float(pickings.number_of_label),2),
-                    "volume": 0.1,
-                    "longueurUnitaire": int(self.geodis_package_id.packaging_length or 0),
-                    "largeurUnitaire": int(self.geodis_package_id.width),
-                    "hauteurUnitaire": int(self.geodis_package_id.height or 0),
+                    "poids": round(total_bulk_weight / float(pickings.number_of_label), 2),
+                    "volume": bulk_volume,
+                    "longueurUnitaire": bulk_length,
+                    "largeurUnitaire": bulk_width,
+                    "hauteurUnitaire": bulk_height,
                     "referenceColis": ""
                 })
 
@@ -128,7 +142,7 @@ class DeliveryCarrier(models.Model):
                     },
                     "listUmgs":parcel_data,
                     "poidsTotal":pickings.shipping_weight or 0,
-                    # "volumeTotal":,
+                    "volumeTotal": round(sum(p["volume"] for p in parcel_data), 6),
                     "optionLivraison": str(self.option_livraison),
                     "emailNotificationDestinataire": receiver_id.email or '',
                     "smsNotificationDestinataire": receiver_id.mobile or ''
