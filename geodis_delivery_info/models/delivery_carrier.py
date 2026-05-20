@@ -41,9 +41,10 @@ class DeliveryCarrier(models.Model):
         list_envois[0]['dateDepartEnlevement'] = date_today.strftime("%Y-%m-%d")
 
         # dateLivraison = date saisie par l'utilisateur, ou J+1 ouvré par défaut
-        if not pickings.date_enlevement_souhaitee_jf:
-            pickings.date_enlevement_souhaitee_jf = self._geodis_next_working_day(date_today)
-        list_envois[0]['dateLivraison'] = pickings.date_enlevement_souhaitee_jf.strftime("%Y-%m-%d")
+        if self.option_livraison != 'RDW':
+            if not pickings.date_enlevement_souhaitee_jf:
+                pickings.date_enlevement_souhaitee_jf = self._geodis_next_working_day(date_today)
+            list_envois[0]['dateLivraison'] = pickings.date_enlevement_souhaitee_jf.strftime("%Y-%m-%d")
 
         # Injection de l'information de livraison
         instruction = pickings.delivery_info or ''
