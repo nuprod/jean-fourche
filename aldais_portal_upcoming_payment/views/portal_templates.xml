@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="portal_my_home_upcoming_payment" inherit_id="portal.portal_my_home" name="Prélèvement à venir">
-        <xpath expr="//div[@id='portal_personal_details']" position="inside">
+        <xpath expr="//a[@href='/my/account']" position="after">
             <t t-if="upcoming_sepa_amount">
                 <div class="mt-3 pt-3 border-top">
                     <span class="small text-muted">Prélèvement à venir</span>
