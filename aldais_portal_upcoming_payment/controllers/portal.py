@@ -1,5 +1,6 @@
 from odoo import fields
 from odoo.http import request
+from odoo.tools.misc import format_amount
 from odoo.addons.portal.controllers.portal import CustomerPortal
 
 
@@ -23,6 +24,7 @@ class CustomerPortalUpcomingPayment(CustomerPortal):
             ('batch_payment_id.state', 'in', ['draft', 'sent']),
         ])
 
-        values['upcoming_sepa_amount'] = sum(payments.mapped('amount'))
-        values['upcoming_sepa_currency'] = request.env.company.currency_id
+        amount = sum(payments.mapped('amount'))
+        currency = request.env.company.currency_id
+        values['upcoming_sepa_amount_str'] = format_amount(request.env, amount, currency)
         return values
