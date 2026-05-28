@@ -2,8 +2,8 @@
 <odoo>
     <template id="portal_my_orders_delivery_date" inherit_id="sale.portal_my_orders" name="Ajout colonne Date de livraison">
 
-        <!-- Ajout de l'en-tête avant "Date de la commande" -->
-        <xpath expr="//thead/tr/th[.//t[@t-set='searchbar_sortby_name' and text()='date']]" position="before">
+        <!-- Ajout de l'en-tête avant "Date de la commande" (texte source Odoo : "Order Date") -->
+        <xpath expr="//thead/tr/th[normalize-space(.)='Order Date']" position="before">
             <th class="text-end">Date de livraison</th>
         </xpath>
 
