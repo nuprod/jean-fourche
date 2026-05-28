@@ -15,13 +15,16 @@ class CustomerPortalUpcomingPayment(CustomerPortal):
             ('commercial_partner_id', '=', commercial_partner.id)
         ]).ids
 
+        upcoming_batches = request.env['account.batch.payment'].sudo().search([
+            ('date', '>=', fields.Date.today()),
+            ('payment_method_id.code', '=', 'sepa_direct_debit'),
+            ('state', 'in', ['draft', 'sent']),
+        ])
+
         payments = request.env['account.payment'].sudo().search([
             ('partner_id', 'in', all_partner_ids),
-            ('state', '=', 'posted'),
-            ('batch_payment_id', '!=', False),
-            ('batch_payment_id.date', '>', fields.Date.today()),
-            ('batch_payment_id.payment_method_id.code', '=', 'sepa_direct_debit'),
-            ('batch_payment_id.state', 'in', ['draft', 'sent']),
+            ('batch_payment_id', 'in', upcoming_batches.ids),
+            ('state', 'not in', ['cancel']),
         ])
 
         amount = sum(payments.mapped('amount'))
