@@ -16,4 +16,23 @@
         </xpath>
 
     </template>
+
+    <!-- Vue détail commande : remplace le bloc "Date de livraison estimée" (picking.scheduled_date)
+         par sale_order.commitment_date -->
+    <template id="portal_sale_order_commitment_date" inherit_id="sale_stock.sale_order_portal_content_inherit_sale_stock" name="Date de livraison estimée - commitment_date">
+
+        <!-- Remplace le div conditionnel t-if="delivery_orders" par l'affichage de commitment_date -->
+        <xpath expr="//div[@t-if='delivery_orders']" position="replace">
+            <div class="col-12 col-lg-6 mb-4">
+                <h4 class="mb-1">Date de livraison estimée</h4>
+                <hr class="mt-1 mb-2"/>
+                <div class="small d-lg-inline-block">
+                    Date :
+                    <span t-if="sale_order.commitment_date" t-field="sale_order.commitment_date" t-options='{"widget": "date"}'/>
+                    <span t-else="">en cours de planification</span>
+                </div>
+            </div>
+        </xpath>
+
+    </template>
 </odoo>
