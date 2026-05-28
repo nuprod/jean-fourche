@@ -2,13 +2,13 @@
 <odoo>
     <template id="portal_my_orders_delivery_date" inherit_id="sale.portal_my_orders" name="Ajout colonne Date de livraison">
 
-        <!-- Ajout de l'en-tête de colonne après "Statut livraison" -->
-        <xpath expr="//thead/tr/th[last()]" position="after">
+        <!-- Ajout de l'en-tête avant "Date de la commande" -->
+        <xpath expr="//thead/tr/th[.//t[@t-set='searchbar_sortby_name' and text()='date']]" position="before">
             <th class="text-end">Date de livraison</th>
         </xpath>
 
-        <!-- Ajout de la cellule de données dans chaque ligne de commande -->
-        <xpath expr="//t[@t-foreach='orders']/tr/td[last()]" position="after">
+        <!-- Ajout de la cellule de données avant la cellule "date_order" -->
+        <xpath expr="//t[@t-foreach='orders']/tr/td[span[@t-field='order.date_order']]" position="before">
             <td class="text-end">
                 <span t-if="order.commitment_date" t-field="order.commitment_date" t-options='{"widget": "date"}'/>
                 <span t-else="">en cours de planification</span>
