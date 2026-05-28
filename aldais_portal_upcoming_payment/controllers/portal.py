@@ -22,6 +22,31 @@ class CustomerPortalUpcomingPayment(CustomerPortal):
         ]).ids
         _logger.info("UPCOMING_PAYMENT | all_partner_ids=%s", all_partner_ids)
 
+        # Test 1 : sans aucun filtre
+        all_batches = request.env['account.batch.payment'].sudo().search([])
+        _logger.info("UPCOMING_PAYMENT | total batches (aucun filtre)=%s", len(all_batches))
+        for b in all_batches:
+            _logger.info("UPCOMING_PAYMENT | batch id=%s name=%s date=%s state=%s method_id=%s method_code=%s",
+                         b.id, b.name, b.date, b.state, b.payment_method_id.id, b.payment_method_id.code)
+
+        # Test 2 : filtre date uniquement
+        batches_date = request.env['account.batch.payment'].sudo().search([
+            ('date', '>=', fields.Date.today()),
+        ])
+        _logger.info("UPCOMING_PAYMENT | batches avec date>=%s : %s", fields.Date.today(), len(batches_date))
+
+        # Test 3 : filtre état uniquement
+        batches_state = request.env['account.batch.payment'].sudo().search([
+            ('state', 'in', ['draft', 'sent']),
+        ])
+        _logger.info("UPCOMING_PAYMENT | batches avec state in [draft,sent] : %s", len(batches_state))
+
+        # Test 4 : filtre méthode uniquement
+        batches_method = request.env['account.batch.payment'].sudo().search([
+            ('payment_method_id.code', '=', 'sepa_direct_debit'),
+        ])
+        _logger.info("UPCOMING_PAYMENT | batches avec payment_method_id.code=sepa_direct_debit : %s", len(batches_method))
+
         upcoming_batches = request.env['account.batch.payment'].sudo().search([
             ('date', '>=', fields.Date.today()),
             ('payment_method_id.code', '=', 'sepa_direct_debit'),
@@ -29,9 +54,6 @@ class CustomerPortalUpcomingPayment(CustomerPortal):
         ])
         _logger.info("UPCOMING_PAYMENT | today=%s batches found=%s ids=%s",
                      fields.Date.today(), len(upcoming_batches), upcoming_batches.ids)
-        for b in upcoming_batches:
-            _logger.info("UPCOMING_PAYMENT | batch id=%s name=%s date=%s state=%s method_code=%s",
-                         b.id, b.name, b.date, b.state, b.payment_method_id.code)
 
         # Sans filtre partenaire pour voir tous les paiements dans ces batches
         all_payments_in_batches = request.env['account.payment'].sudo().search([
