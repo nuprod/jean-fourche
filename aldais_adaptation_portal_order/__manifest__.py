@@ -5,7 +5,7 @@
     'website': "http://www.nuprod.fr",
     'version': '17.0.1.0.0',
     'category': 'Sales',
-    'depends': ['sale'],
+    'depends': ['sale', 'sale_stock'],
     'data': [
         'views/portal_templates.xml',
     ],
