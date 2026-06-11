@@ -1,37 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="portal_my_orders_delivery_date" inherit_id="sale.portal_my_orders" name="Ajout colonne Date de livraison">
+    <template id="portal_my_orders_inherit"
+              name="My Sales Orders (FR)"
+              inherit_id="sale.portal_my_orders">
 
-        <!-- En-tête : avant le 1er th[@class='text-end'] = "Order Date" dans le source de base -->
-        <xpath expr="//thead/tr/th[@class='text-end'][1]" position="before">
-            <th class="text-end">Date de livraison estimée</th>
+        <!-- Remplacement du titre de la barre de recherche -->
+        <xpath expr="//t[@t-call='portal.portal_searchbar']/t[@t-set='title']" position="replace">
+            <t t-set="title">Vos commandes</t>
         </xpath>
 
-        <!-- Lignes : avant la td contenant les spans order.date_order -->
-        <xpath expr="//t[@t-foreach='orders']/tr/td[.//span[@t-field='order.date_order']]" position="before">
-            <td class="text-end">
-                <span t-if="order.commitment_date" t-field="order.commitment_date" t-options='{"widget": "date"}'/>
-                <span t-else="">en cours de planification</span>
-            </td>
-        </xpath>
-
-    </template>
-
-    <!-- Vue détail commande : remplace le bloc "Date de livraison estimée" (picking.scheduled_date)
-         par sale_order.commitment_date -->
-    <template id="portal_sale_order_commitment_date" inherit_id="sale_stock.sale_order_portal_content_inherit_sale_stock" name="Date de livraison estimée - commitment_date">
-
-        <!-- Remplace le div conditionnel t-if="delivery_orders" par l'affichage de commitment_date -->
-        <xpath expr="//div[@t-if='delivery_orders']" position="replace">
-            <div class="col-12 col-lg-6 mb-4">
-                <h4 class="mb-1">Date de livraison estimée</h4>
-                <hr class="mt-1 mb-2"/>
-                <div class="small d-lg-inline-block">
-                    Date :
-                    <span t-if="sale_order.commitment_date" t-field="sale_order.commitment_date" t-options='{"widget": "date"}'/>
-                    <span t-else="">en cours de planification</span>
-                </div>
+        <!-- Remplacement du message "aucune commande" -->
+        <xpath expr="//div[@t-if='not orders']" position="replace">
+            <div t-if="not orders" class="alert alert-warning" role="alert">
+                Il n'y a actuellement pas de commandes pour votre compte.
             </div>
+        </xpath>
+
+        <!-- Remplacement du thead (colonnes) -->
+        <xpath expr="//t[@t-call='portal.portal_table']/thead" position="replace">
+            <thead>
+                <tr class="active">
+                    <th>
+                        <span class="d-none d-md-inline">Bon de commande #</span>
+                        <span class="d-block d-md-none">Réf.</span>
+                    </th>
+                    <th class="text-center">Référence client</th>
+                    <th class="text-end">Date de la commande</th>
+                    <th class="text-end">Date de livraison estimée</th>
+                    <th class="text-end">Total</th>
+                    <th class="text-end">Statut livraison</th>
+                </tr>
+            </thead>
+        </xpath>
+
+        <!-- Remplacement des lignes du tableau -->
+        <xpath expr="//t[@t-foreach='orders']" position="replace">
+            <t t-foreach="orders" t-as="order">
+                <tr>
+                    <td><a t-att-href="order.get_portal_url()"><t t-out="order.name"/></a></td>
+                    <td class="text-center"><span t-field="order.client_order_ref"/></td>
+                    <td class="text-end">
+                        <span t-field="order.date_order" t-options="{'widget': 'date'}"/>&#160;
+                        <span class="d-none d-md-inline" t-field="order.date_order" t-options="{'time_only': True}"/>
+                    </td>
+                    <td class="text-end">
+                        <t t-if="order.delivery_status == 'full'">
+                            <span t-field="order.effective_date" t-options='{"widget": "date"}'/>
+                        </t>
+                        <t t-else="">
+                            <span t-if="order.commitment_date" t-field="order.commitment_date" t-options='{"widget": "date"}'/>
+                            <span t-else="">en cours de planification</span>
+                        </t>
+                    </td>
+                    <td class="text-end"><span t-field="order.amount_total"/></td>
+                    <td class="text-end"><span t-field="order.delivery_status"/></td>
+                </tr>
+            </t>
         </xpath>
 
     </template>
