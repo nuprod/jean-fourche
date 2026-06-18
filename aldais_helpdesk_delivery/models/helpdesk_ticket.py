@@ -57,7 +57,7 @@ class HelpdeskTicket(models.Model):
         picking = self.env['stock.picking'].create({
             'picking_type_id': picking_type.id,
             'partner_id': delivery_partner_id,
-            'origin': self.name,
+            'origin': "Ticket" + self.ticket_ref
             'helpdesk_ticket_id': self.id,
             'location_id': picking_type.default_location_src_id.id,
             'location_dest_id': location_dest.id,
