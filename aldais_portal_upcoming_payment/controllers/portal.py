@@ -15,26 +15,18 @@ class CustomerPortalUpcomingPayment(CustomerPortal):
             ('commercial_partner_id', '=', commercial_partner.id)
         ]).ids
 
-        upcoming_batches = request.env['account.batch.payment'].sudo().search([
+        upcoming_payments = request.env['account.payment'].sudo().search([
+            ('partner_id', 'in', all_partner_ids),
             ('date', '>=', fields.Date.today()),
-            ('payment_method_id.code', '=', 'sdd'),
-            ('state', 'in', ['draft', 'sent']),
+            ('state', 'not in', ['cancel']),
         ], order='date asc')
 
         currency = request.env.company.currency_id
         upcoming_lines = []
-        for batch in upcoming_batches:
-            payments = request.env['account.payment'].sudo().search([
-                ('partner_id', 'in', all_partner_ids),
-                ('batch_payment_id', '=', batch.id),
-                ('state', 'not in', ['cancel']),
-            ])
-            if not payments:
-                continue
-            amount = sum(payments.mapped('amount'))
+        for payment in upcoming_payments:
             upcoming_lines.append({
-                'date': format_date(request.env, batch.date),
-                'amount_str': format_amount(request.env, amount, currency),
+                'date': format_date(request.env, payment.date),
+                'amount_str': format_amount(request.env, payment.amount, currency),
             })
 
         values['upcoming_sepa_lines'] = upcoming_lines
