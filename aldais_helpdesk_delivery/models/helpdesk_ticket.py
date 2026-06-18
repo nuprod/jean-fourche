@@ -45,13 +45,22 @@ class HelpdeskTicket(models.Model):
                 "pour cette société."
             ))
 
+        # Emplacement destination : property_stock_customer du partenaire,
+        # sinon emplacement client standard de la société
+        delivery_partner = self.env['res.partner'].browse(delivery_partner_id)
+        location_dest = (
+            delivery_partner.property_stock_customer
+            or self.env['res.partner'].browse(self.partner_id.commercial_partner_id.id).property_stock_customer
+            or self.env.ref('stock.stock_location_customers')
+        )
+
         picking = self.env['stock.picking'].create({
             'picking_type_id': picking_type.id,
             'partner_id': delivery_partner_id,
             'origin': self.name,
             'helpdesk_ticket_id': self.id,
             'location_id': picking_type.default_location_src_id.id,
-            'location_dest_id': picking_type.default_location_dest_id.id,
+            'location_dest_id': location_dest.id,
         })
 
         return {
