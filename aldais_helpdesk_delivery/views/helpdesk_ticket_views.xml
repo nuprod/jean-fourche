@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_helpdesk_ticket_form_delivery" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.delivery</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Bouton intelligent "Livraisons" -->
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="action_view_replaces"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-truck"
+                >
+                    <field name="picking_count" widget="statinfo" string="Livraisons"/>
+                </button>
+            </xpath>
+
+            <!-- Bouton "Créer une livraison" dans la barre d'actions -->
+            <xpath expr="//header" position="inside">
+                <button name="action_create_delivery"
+                        string="Créer une livraison"
+                        type="object"
+                        class="btn-secondary"
+                        invisible="stage_id.is_close == True"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
