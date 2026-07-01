@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_chronopost_pickup_point,chronopost_pickup_point,model_chronopost_pickup_point,,1,1,1,1
+access.pickup_point_service,access_pickup_point_service,model_pickup_point_service,,1,1,1,1

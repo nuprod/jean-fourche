@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="chronopost_shipping_sale_order_view" model="ir.ui.view">
+        <field name="name">Sales Order</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[last()]" position="after">
+                <page string="Chronopost Pickup Locations">
+                    <group>
+                        <field name="location_services_ids" widget="many2many_tags">
+                        </field>
+                    </group>
+                    <field name="chronopost_pickup_point_ids" readonly="1">
+                        <tree nolabel="1" readonly="1">
+                            <field name="name"/>
+                            <field name="point_identifier"/>
+                            <field name="street"/>
+                            <field name="street2"/>
+                            <field name="zip"/>
+                            <field name="city"/>
+                            <field name="country_id"/>
+                            <button type="object" class="fa fa-arrow-right oe_link" name="set_location"
+                                    string="Set Location"/>
+                        </tree>
+                    </field>
+                    <group>
+                        <field name="chronopost_set_pickup_point_id" readonly="1"/>
+                        <button type="object" class="fa fa-arrow-right oe_link" name="get_locations"
+                                string="Get Locations"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

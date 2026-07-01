@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_res_company_chronopost_configuration" model="ir.ui.view">
+        <field name="name">chronopost Configuration</field>
+        <field name="model">res.company</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[last()]" position="after">
+                <page string="Chronopost Configuration">
+                    <group>
+                        <field name="use_chronopost_shipping_provider"/>
+                    </group>
+                    <group invisible="use_chronopost_shipping_provider != True">
+                        <field name="chronopost_api_url" required="use_chronopost_shipping_provider != False"/>
+                        <field name="chronopost_account_number" required="use_chronopost_shipping_provider != False"/>
+                        <field name="chronopost_password" required="use_chronopost_shipping_provider != False"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

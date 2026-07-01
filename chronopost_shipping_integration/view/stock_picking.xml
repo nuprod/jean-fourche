@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <record id="chronopost_shipping_delivery_order_view" model="ir.ui.view">
+            <field name="name">stock.picking</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position='inside'>
+                    <page string="chronopost Information" invisible="delivery_type != 'chronopost_provider'">
+                        <group>
+                            <group>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="chronopost_number_of_parcel"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
