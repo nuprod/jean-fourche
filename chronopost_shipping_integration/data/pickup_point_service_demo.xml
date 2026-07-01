@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="pickup_point_service_withdrawal_service" model="pickup.point.service">
+            <field name="pickup_point_service_id">100</field>
+            <field name="pickup_point_service_name">Withdrawal</field>
+        </record>
+
+        <record id="pickup_point_service_instance_service" model="pickup.point.service">
+            <field name="pickup_point_service_id">102</field>
+            <field name="pickup_point_service_name">Instance</field>
+        </record>
+
+        <record id="pickup_point_service_single_deposit_service" model="pickup.point.service">
+            <field name="pickup_point_service_id">200</field>
+            <field name="pickup_point_service_name">Single deposit</field>
+        </record>
+
+        <record id="pickup_point_service_digital_parcel_label_service" model="pickup.point.service">
+            <field name="pickup_point_service_id">204</field>
+            <field name="pickup_point_service_name">Digital Parcel Label</field>
+        </record>1
+        <record id="pickup_point_service_swap_parcels_for_parcels_service" model="pickup.point.service">
+            <field name="pickup_point_service_id">300</field>
+            <field name="pickup_point_service_name">Swap parcels for parcels</field>
+        </record>
+
+        <record id="pickup_point_service_parcel_swap_with_control_of_content_service" model="pickup.point.service">
+            <field name="pickup_point_service_id">301</field>
+            <field name="pickup_point_service_name">Parcel swap with control of content</field>
+        </record>
+
+        <record id="pickup_point_service_deposit_in_blue_bag_service" model="pickup.point.service">
+            <field name="pickup_point_service_id">700</field>
+            <field name="pickup_point_service_name">Deposit in blue bag</field>
+        </record>
+
+        <record id="pickup_point_service_reverse_swap_out_of_sync_sealed_gray_saddlebags_service"
+                model="pickup.point.service">
+            <field name="pickup_point_service_id">701</field>
+            <field name="pickup_point_service_name">Reverse Swap out of sync sealed gray saddlebags</field>
+        </record>
+
+    </data>
+</odoo>

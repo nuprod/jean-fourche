@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="chronopost_shiipping_provider_details" model="ir.ui.view">
+        <field name="name">delivery.carrier</field>
+        <field name="model">delivery.carrier</field>
+        <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='destination']" position='before'>
+                <page string="Configuration" name="chronopost_configuration" invisible="delivery_type != 'chronopost_provider'">
+                    <group>
+                        <group>
+                            <field name="company_id" required="delivery_type == 'chronopost_provider'"/>
+                            <field name="chronopost_provider_package_id" required="delivery_type == 'chronopost_provider'"/>
+                            <field name="chronopost_shipper_civility" required="delivery_type == 'chronopost_provider'"/>
+                            <field name="chronopost_service" required="delivery_type == 'chronopost_provider'"/>
+                            <field name="chronopost_product_code" required="delivery_type == 'chronopost_provider'"/>
+                            <field name="chronopost_with_reservation" required="delivery_type == 'chronopost_provider'"/>
+                        </group>
+                        <group>
+                             <field name="chronopost_mode_retour" required="delivery_type == 'chronopost_provider'"/>
+                            <field name="chronopost_package_type" required="delivery_type == 'chronopost_provider'"/>
+                            <field name="chronopost_label_mode" required="delivery_type == 'chronopost_provider'"/>
+                            <field name="chronopost_pre_alert" required="delivery_type == 'chronopost_provider'"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
