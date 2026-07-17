@@ -55,6 +55,17 @@ class SaleIntegration(models.Model):
         ),
     )
 
+    order_line_metafield_mapping_ids = fields.One2many(
+        comodel_name='integration.metafield.mapping',
+        inverse_name='integration_id',
+        string='Order Line Metafield Mappings',
+        domain=[('type', '=', 'order_line')],
+        help=(
+            'Defines the mappings between the order line metafields in the external system and the '
+            'fields in Odoo.'
+        ),
+    )
+
     invalid_location_mapping = fields.Boolean(
         string='Invalid Location Mapping',
         compute='_compute_invalid_location_mapping',
@@ -586,10 +597,12 @@ class SaleIntegration(models.Model):
 
         metafield_list = self.adapter.get_metafields(meta_type)
 
+        meta_type_label = meta_type.replace('_', ' ').title()
+
         if not metafield_list:
             return self._raise_notification(
                 'warning',
-                f'There are no {meta_type.title()} metafields in your Shopify store',
+                f'There are no {meta_type_label} metafields in your Shopify store',
             )
 
         MetaField = self.env['external.metafield']
@@ -615,7 +628,7 @@ class SaleIntegration(models.Model):
 
         return self._raise_notification(
             'success',
-            _('%ss metafields were successfully updated') % meta_type.title(),
+            _('%s metafields were successfully updated') % meta_type_label,
         )
 
     def import_sale_channels(self, remove_existing_records=False):

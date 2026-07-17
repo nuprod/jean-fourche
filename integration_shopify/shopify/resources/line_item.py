@@ -1,9 +1,10 @@
 # See LICENSE file for full copyright and licensing details.
 
 from .base import GqlDict
+from .metafields_mixin import MetafieldMixin
 
 
-class LineItem(GqlDict):
+class LineItem(GqlDict, MetafieldMixin):
 
     _gid_name = 'LineItem'
     _body = GqlDict._tmpl.LINE_ITEM_BODY
@@ -125,6 +126,7 @@ class OrderLineItem(LineItem):
             'price_unit_tax_incl': self.price_tax_incl,
             'taxes': taxes,
             'discount': {},
+            'metafields': [x.to_dict() for x in self.metafields],
         }
 
         discount_allocations = self.discount_allocations
