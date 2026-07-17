@@ -796,16 +796,10 @@ class GraphQLTemplate:
         discountAllocations {
             %s
         }
-        metafields(first: 50) {
-            nodes {
-                %s
-            }
-        }
     """ % (
         TAX_LINE_BODY,
         MONEY_BAG_BODY,
         DISCOUNT_ALLOCATION_BODY,
-        METAFIELD_BODY,
     )
 
     LINE_ITEM_MINIMAL_BODY = """
