@@ -14,26 +14,25 @@ class IntegrationSaleOrderFactory(models.TransientModel):
 
     def _apply_shopify_line_metafield_mappings(self, vals, line_data):
         """
-        Update order line values based on the order line custom attributes mappings
-        (Shopify "line item properties") from the integration.
+        Update order line values based on the order line metafield mappings from the integration.
         """
         metafield_mappings = self.integration_id.order_line_metafield_mapping_ids
 
         if not metafield_mappings:
             return
 
-        line_custom_attributes = line_data.get('custom_attributes') or {}
+        line_metafields = line_data.get('metafields') or []
 
-        if not line_custom_attributes:
+        if not line_metafields:
             return
 
         for mapping in metafield_mappings:
-            if mapping.metafield_key not in line_custom_attributes:
-                continue
+            for line_metafield in line_metafields:
+                if line_metafield.get('key') == mapping.metafield_key:
+                    metafield_value = line_metafield.get('value')
 
-            metafield_value = line_custom_attributes[mapping.metafield_key]
+                    if mapping.metafield_type == 'boolean':
+                        metafield_value = True if metafield_value == 'true' else False
 
-            if mapping.metafield_type == 'boolean':
-                metafield_value = True if metafield_value == 'true' else False
-
-            vals[mapping.odoo_field_id.name] = metafield_value
+                    vals[mapping.odoo_field_id.name] = metafield_value
+                    break

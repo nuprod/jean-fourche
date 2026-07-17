@@ -5,17 +5,9 @@ _logger = logging.getLogger(__name__)
 
 def post_load():
     """
-    Extend the Shopify connector (integration_shopify) so that order line custom
-    attributes ("line item properties" in Shopify's terminology -- free-form key/value
-    text pairs set on a line item at cart/checkout time, e.g. a gift message or an
-    engraving note) are fetched in the same GraphQL request as the order, without
-    modifying the vendor module's source files.
-
-    Note: Shopify's `LineItem` type does NOT implement the `HasMetafields` interface --
-    real typed/defined metafields cannot be attached to an order line item at all
-    (confirmed against the live API: "Field 'metafields' doesn't exist on type
-    'LineItem'"). `customAttributes` is the closest -- and only -- per-line-item data
-    Shopify actually exposes for this use case.
+    Extend the Shopify connector (integration_shopify) so that line item metafields
+    are fetched in the same GraphQL request as the order, without modifying the
+    vendor module's source files.
 
     GraphQL body constants (GraphQLTemplate.*) and resource classes (LineItem,
     OrderLineItem, Order) are plain Python objects, not Odoo models, so they can't
@@ -24,31 +16,33 @@ def post_load():
     """
     from odoo.addons.integration_shopify.shopify.graphql_templates import GraphQLTemplate
     from odoo.addons.integration_shopify.shopify.resources.line_item import LineItem, OrderLineItem
+    from odoo.addons.integration_shopify.shopify.resources.metafields_mixin import MetafieldMixin
     from odoo.addons.integration_shopify.shopify.resources.order import Order
 
     old_line_item_body = GraphQLTemplate.LINE_ITEM_BODY
 
-    if 'customAttributes' in old_line_item_body:
+    if 'metafields(' in old_line_item_body:
         # Already patched (e.g. module reloaded in the same process).
         return
 
     old_order_body = GraphQLTemplate.ORDER_BODY
 
-    custom_attributes_snippet = """
-        customAttributes {
-            %s
+    metafields_snippet = """
+        metafields(first: 50) {
+            nodes {
+                %s
+            }
         }
-    """ % GraphQLTemplate.ORDER_CUSTOM_ATTRIBUTE_BODY
+    """ % GraphQLTemplate.METAFIELD_BODY
 
-    new_line_item_body = old_line_item_body + custom_attributes_snippet
+    new_line_item_body = old_line_item_body + metafields_snippet
     new_order_body = old_order_body.replace(old_line_item_body, new_line_item_body)
 
     if new_order_body == old_order_body:
         _logger.error(
             'Could not patch the Shopify ORDER_BODY GraphQL query to include line item '
-            'custom attributes: LINE_ITEM_BODY was not found inside ORDER_BODY. The '
-            'integration_shopify module may have changed in a way that is incompatible '
-            'with this patch.'
+            'metafields: LINE_ITEM_BODY was not found inside ORDER_BODY. The integration_shopify '
+            'module may have changed in a way that is incompatible with this patch.'
         )
         return
 
@@ -60,24 +54,20 @@ def post_load():
     LineItem._body = new_line_item_body
     Order._body = new_order_body
 
-    # 2. Expose `.custom_attributes` on line items, same pattern already used by
-    # integration_shopify for the order-level custom attributes (Order.custom_attributes).
-    def custom_attributes(self):
-        self.ensure_one()
-        return {x['key']: x['value'] for x in (self['customAttributes'] or [])}
+    # 2. Expose `.metafields` / `.get_metafields()` on line items, same mechanism
+    # already used by integration_shopify for Order/Customer/Product.
+    LineItem.metafields = MetafieldMixin.metafields
+    LineItem.get_metafields = MetafieldMixin.get_metafields
+    LineItem._prepare_metafields_body = MetafieldMixin._prepare_metafields_body
 
-    LineItem.custom_attributes = property(custom_attributes)
-
-    # 3. Carry the custom attributes through to the parsed order line data.
+    # 3. Carry the metafields through to the parsed order line data.
     original_parse = OrderLineItem.parse
 
-    def parse_with_custom_attributes(self, requested_quantity):
+    def parse_with_metafields(self, requested_quantity):
         result = original_parse(self, requested_quantity)
-        result['custom_attributes'] = self.custom_attributes
+        result['metafields'] = [x.to_dict() for x in self.metafields]
         return result
 
-    OrderLineItem.parse = parse_with_custom_attributes
+    OrderLineItem.parse = parse_with_metafields
 
-    _logger.info(
-        'Shopify connector patched: order line custom attributes are now fetched with orders.'
-    )
+    _logger.info('Shopify connector patched: order line metafields are now fetched with orders.')
