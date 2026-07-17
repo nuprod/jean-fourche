@@ -44,6 +44,7 @@ TYPE_MAPPING = {
 MODEL_MAPPING = {
     'customer': 'res.partner',
     'order': 'sale.order',
+    'order_line': 'sale.order.line',
 }
 
 
@@ -69,6 +70,7 @@ class Metafield(models.Model):
         selection=[
             ('customer', 'Customer'),
             ('order', 'Order'),
+            ('order_line', 'Order Line'),
         ],
         string='Type',
         help=(

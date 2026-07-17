@@ -58,6 +58,38 @@
                             </tree>
                         </field>
                     </group>
+
+                    <group string="Order Line Metafields Mappings"
+                           name="sale_order_line_metafields_mappings"
+                           invisible="not is_integration_shopify">
+                        <div colspan="2">
+                            <p>
+                                Use the table below to setup mappings between Shopify order line metafields and fields on sale.order.line model in Odoo.
+                            </p>
+                            <p>
+                                <button name="import_metafields"
+                                        string="Update Metafields"
+                                        type="object"
+                                        class="btn btn-primary"
+                                        context="{'external_entity': 'order_line'}"
+                                />
+                            </p>
+                        </div>
+                        <field name="order_line_metafield_mapping_ids" colspan="2" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="integration_id" column_invisible="1"/>
+                                <field name="filtered_odoo_fields" column_invisible="1"/>
+                                <field name="metafield_id"
+                                       domain="[('type', '=', 'order_line'), ('integration_id', '=', integration_id)]"
+                                       options="{'no_open': True, 'no_create': True}"/>
+                                <field name="metafield_key"/>
+                                <field name="metafield_type"/>
+                                <field name="odoo_field_id"
+                                       options="{'no_open': True, 'no_create': True}"
+                                       required="metafield_id != False"/>
+                            </tree>
+                        </field>
+                    </group>
                 </page>
 
                 <page name="product_default_page" position="after">
