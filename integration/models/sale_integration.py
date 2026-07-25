@@ -6523,7 +6523,9 @@ class SaleIntegration(models.Model):
 
         # If the product is not found, attempt to re-import it from the external system
         template_code, variant_code = self.adapter._parse_product_external_code(complex_variant_code)
-        external_template, external_variants, __, __ = self._import_external_product(template_code)
+        external_template, external_variants, __, __ = self._import_external_product(
+            template_code, raise_error=False,
+        )
 
         # Use fallback product if no external templates found or variant code doesn't match.
         if not external_template or complex_variant_code not in external_variants.mapped('code'):
