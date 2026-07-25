@@ -6547,10 +6547,31 @@ class SaleIntegration(models.Model):
             external_record = self.env['integration.product.template.external'] \
                 .get_external_by_code(self, template_code)
 
-            self.import_product(
-                external_record.id,
-                import_images=self.allow_import_images,
-            )
+            try:
+                self.import_product(
+                    external_record.id,
+                    import_images=self.allow_import_images,
+                )
+            except Exception as ex:
+                # Product creation failed (e.g. missing SKU/reference on a customized product).
+                # Convert to NotFoundExternalProduct so the caller can apply the fallback product.
+                _logger.warning(
+                    '%s: Auto-creation of product "%s" (template=%s, variant=%s) failed: %s. '
+                    'Fallback product will be used if configured.',
+                    self.name,
+                    product_data.get('name', 'null'),
+                    template_code,
+                    variant_code,
+                    str(ex),
+                )
+                es.raise_error(
+                    err_code='E110',
+                    integration_name=self.name,
+                    product_id=template_code,
+                    variant_id=variant_code,
+                    product_name=product_data.get('name', 'null'),
+                    product_reference=product_data.get('reference', 'null'),
+                )
             product = self._get_odoo_product(complex_variant_code, raise_error=True)
 
         return product
