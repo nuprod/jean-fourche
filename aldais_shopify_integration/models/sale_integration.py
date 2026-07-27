@@ -21,14 +21,38 @@ class SaleIntegration(models.Model):
         ),
     )
 
+    def _import_external_product(self, template_ids, try_to_map=True, raise_error=True):
+        """
+        Shopify-specific override: force raise_error=False so that import errors
+        (e.g. E113 UniqueViolation when multiple "customized" products share an
+        empty external_reference='') are silently collected instead of being
+        re-raised as ApiImportError.
+
+        When raise_error=False, _import_external_product returns empty results on
+        error, which causes _try_get_odoo_product to raise E110 naturally.
+        The factory then converts E110 to UndefinedExternalProduct so the
+        configured fallback product is used.
+
+        For non-Shopify integrations the base behaviour is preserved.
+        """
+        if self.is_integration_shopify:
+            raise_error = False
+        return super()._import_external_product(
+            template_ids, try_to_map=try_to_map, raise_error=raise_error,
+        )
+
     def _try_get_odoo_product(self, product_data, force_create=False):
         """
-        Shopify-specific override: convert unexpected errors during product resolution
-        (e.g. UniqueViolation on empty SKU, or product auto-creation failure for
-        "customized" products without a reference) into NotFoundExternalProduct (E110),
-        so the factory can redirect to the fallback product.
+        Shopify-specific override: convert unexpected errors during product
+        auto-creation (e.g. ValidationError on a "customized" product without
+        SKU/reference) into NotFoundExternalProduct (E110) so the factory can
+        redirect to the configured fallback product.
 
-        For non-Shopify integrations, the base behaviour is preserved.
+        UniqueViolation errors (E113) are already suppressed upstream by
+        _import_external_product (raise_error=False), so this handler only
+        needs to cover auto-creation failures from import_product().
+
+        For non-Shopify integrations the base behaviour is preserved.
         """
         if not self.is_integration_shopify:
             return super()._try_get_odoo_product(product_data, force_create=force_create)
@@ -46,16 +70,12 @@ class SaleIntegration(models.Model):
             # Expected integration errors — let them propagate as-is.
             raise
         except Exception as ex:
-            # Shopify-specific: unexpected failure during product resolution.
-            # Examples:
-            #   - ApiImportError wrapping a UniqueViolation (E113) when multiple
-            #     customised products share an empty external_reference=''.
-            #   - ValidationError during auto-creation of a product without SKU/reference.
-            # Convert to E110 so the factory's Shopify _try_get_odoo_product override
-            # can redirect to the configured fallback product.
+            # Unexpected failure during auto-creation of a Shopify product
+            # (e.g. ValidationError because the product has no SKU/reference).
+            # Convert to E110 so the factory fallback logic is triggered.
             _logger.warning(
-                '%s: Failed to resolve Shopify product "%s" (template=%s, variant=%s): %s. '
-                'Fallback product will be used if configured.',
+                '%s: Auto-creation of Shopify product "%s" (template=%s, variant=%s) '
+                'failed: %s. Fallback product will be used if configured.',
                 self.name,
                 product_data.get('name', 'null'),
                 template_code,
