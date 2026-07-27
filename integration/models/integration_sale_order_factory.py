@@ -454,15 +454,10 @@ class IntegrationSaleOrderFactory(models.TransientModel):
         try:
             product = self._try_get_odoo_product(line_data)
             vals['product_id'] = product.id
-        except (
-            es.UndefinedExternalProduct,
-            es.NotFoundExternalProduct,
-            es.NotMappedFromExternal,
-        ) as error:
+        except (es.UndefinedExternalProduct) as error:
             line_name, line_reference = line_data['name'], line_data['reference']
 
-            # Try to get fallback product if the product is not found, not defined,
-            # or could not be auto-created (e.g. customized product without SKU).
+            # Try to get fallback product if the product is not found or not defined
             product = integration.get_fallback_product_or_raise(
                 line_data['product_id'],
                 line_name,

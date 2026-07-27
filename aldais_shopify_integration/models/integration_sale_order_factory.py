@@ -1,8 +1,29 @@
 from odoo import models
 
+from odoo.addons.integration.exceptions import ErrorStore as es
+
 
 class IntegrationSaleOrderFactory(models.TransientModel):
     _inherit = 'integration.sale.order.factory'
+
+    def _try_get_odoo_product(self, line, force_create=False):
+        """
+        Shopify-specific override: convert NotFoundExternalProduct (E110) and
+        NotMappedFromExternal into UndefinedExternalProduct (E109) so that the
+        base _prepare_order_line_vals fallback logic handles them transparently,
+        without requiring any changes to the integration module.
+
+        For non-Shopify integrations, the base behaviour is preserved.
+        """
+        if not self.integration_id.is_integration_shopify:
+            return super()._try_get_odoo_product(line, force_create=force_create)
+
+        try:
+            return super()._try_get_odoo_product(line, force_create=force_create)
+        except (es.NotFoundExternalProduct, es.NotMappedFromExternal) as ex:
+            # Re-raise as UndefinedExternalProduct so the base _prepare_order_line_vals
+            # catches it and uses the configured fallback product.
+            raise es.UndefinedExternalProduct(str(ex))
 
     def _prepare_order_line_vals(self, order, line_data):
         res = super()._prepare_order_line_vals(order, line_data)
