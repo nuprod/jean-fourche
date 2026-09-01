@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_cancel_aldais_shopify_view_form" model="ir.ui.view">
+        <field name="name">sale.order.cancel.form.aldais.shopify</field>
+        <field name="model">sale.order.cancel</field>
+        <field name="inherit_id" ref="integration_shopify.sale_order_cancel_integration_shopify_view_form"/>
+        <field name="arch" type="xml">
+            <button name="action_cancel_integration" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </button>
+        </field>
+    </record>
+</odoo>

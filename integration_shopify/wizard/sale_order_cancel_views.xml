@@ -43,7 +43,7 @@
                 <footer>
                     <div class="d-flex justify-content-between w-100">
                         <div class="d-flex align-items-center align-content-around flex-wrap gap-1">
-                            <button string="Cancel E-Commerce Order" name="action_cancel_integration" invisible="1" type="object" class="btn-primary"/>
+                            <button string="Cancel E-Commerce Order" name="action_cancel_integration" invisible="context.get('cancel_integration_order_done')" type="object" class="btn-primary"/>
                             <button string="Skip" class="btn-secondary" special="cancel"/>
                         </div>
                         <div>
