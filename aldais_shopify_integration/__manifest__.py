@@ -15,6 +15,7 @@
     'depends': ['integration', 'integration_shopify'],
     'data': [
         'views/sale_integration_views.xml',
+        'views/sale_order_cancel_views.xml',
     ],
     'installable': True,
     'application': False,
