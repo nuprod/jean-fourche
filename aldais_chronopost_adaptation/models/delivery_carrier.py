@@ -92,9 +92,12 @@ class DeliveryCarrier(models.Model):
             ("6B", "2Shop Europe"),
             ("6C", "2Shop Retour Europe"),
         ],
-        ondelete={"5X": "set default", "5Y": "set default", "6B": "set default", "6C": "set default"},
+        # "set default" nécessite un default défini sur le champ de base, ce qui n'est pas le cas ici ;
+        # "cascade" (défaut Odoo pour un champ sans valeur de repli) supprime le transporteur concerné
+        # si ce module est un jour désinstallé, ce qui reste acceptable pour ce cas d'usage.
+        ondelete={"5X": "cascade", "5Y": "cascade", "6B": "cascade", "6C": "cascade"},
     )
-    chronopost_label_mode = fields.Selection(selection_add=[("PPR", "PPR (retour A4)")], ondelete={"PPR": "set default"})
+    chronopost_label_mode = fields.Selection(selection_add=[("PPR", "PPR (retour A4)")], ondelete={"PPR": "cascade"})
     chronopost_return_partner_id = fields.Many2one(
         "res.partner", string="Adresse de retour 2Shop",
         help="Adresse à laquelle Chronopost doit livrer les retours 2Shop Retour / 2Shop Retour Europe "
