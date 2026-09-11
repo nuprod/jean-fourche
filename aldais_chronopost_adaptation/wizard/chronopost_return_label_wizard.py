@@ -87,7 +87,7 @@ class ChronopostReturnLabelWizard(models.TransientModel):
         company = carrier.company_id
 
         vals = {
-            "header": {"accountNumber": company.chronopost_account_number, "idEmit": "CHRFR"},
+            "header": {"accountNumber": carrier._chronopost_2shop_account_number(), "idEmit": "CHRFR"},
             "shipper": {
                 "shipperAdress1": self.partner_id.street, "shipperAdress2": self.partner_id.street2,
                 "shipperCity": self.partner_id.city, "shipperCivility": "M",
@@ -133,7 +133,7 @@ class ChronopostReturnLabelWizard(models.TransientModel):
             # PPR : impression A4 avec liste des points relais de dépose, obligatoire pour les retours 2Shop.
             "skybill_params": {"duplicata": "N", "mode": "PPR", "withReservation": carrier.chronopost_with_reservation or "2"},
             "top": {
-                "password": company.chronopost_password,
+                "password": carrier._chronopost_2shop_password(),
                 "modeRetour": carrier.chronopost_mode_retour or "2",
                 "numberOfParcel": str(self.number_of_parcel or 1),
                 "version": "2.0",

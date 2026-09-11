@@ -6,6 +6,13 @@
         <field name="inherit_id" ref="chronopost_shipping_integration.chronopost_shiipping_provider_details"/>
         <field name="arch" type="xml">
             <field name="chronopost_pre_alert" position="after">
+                <field name="chronopost_2shop_account_number"
+                       invisible="chronopost_product_code not in ('5X', '5Y', '6B', '6C')"
+                       placeholder="Laisser vide pour réutiliser le n° de compte de la société"/>
+                <field name="chronopost_2shop_password"
+                       invisible="chronopost_product_code not in ('5X', '5Y', '6B', '6C')"
+                       password="True"
+                       placeholder="Laisser vide pour réutiliser le mot de passe de la société"/>
                 <field name="chronopost_return_partner_id"
                        invisible="chronopost_product_code not in ('5Y', '6C')"/>
             </field>
