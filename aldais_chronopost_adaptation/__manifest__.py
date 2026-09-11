@@ -23,10 +23,10 @@
     'depends': ['chronopost_shipping_integration'],
     'data': [
         'security/ir.model.access.csv',
+        'wizard/chronopost_return_label_wizard_views.xml',
         'views/delivery_carrier_views.xml',
         'views/product_template_views.xml',
         'views/sale_order_views.xml',
-        'wizard/chronopost_return_label_wizard_views.xml',
     ],
     'installable': True,
     'application': False,
