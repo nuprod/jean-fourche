@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <group>
                 <field name="chronopost_set_pickup_point_id" position="before">
+                    <field name="carrier_id" invisible="1"/>
                     <button type="action"
                             name="%(aldais_chronopost_adaptation.chronopost_return_label_wizard_action)d"
                             string="Générer une étiquette de retour Chronopost"
