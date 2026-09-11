@@ -39,8 +39,8 @@ class SaleOrder(models.Model):
         body_node = etree.SubElement(root_node, "soapenv:Body")
         search_node = etree.SubElement(body_node, "cxf:recherchePointChronopostInter")
 
-        etree.SubElement(search_node, "accountNumber").text = order.company_id.chronopost_account_number or ""
-        etree.SubElement(search_node, "password").text = order.company_id.chronopost_password or ""
+        etree.SubElement(search_node, "accountNumber").text = order.carrier_id._chronopost_2shop_account_number() or ""
+        etree.SubElement(search_node, "password").text = order.carrier_id._chronopost_2shop_password() or ""
         etree.SubElement(search_node, "address").text = recipient_address.street or ""
         etree.SubElement(search_node, "zipCode").text = recipient_address.zip or ""
         etree.SubElement(search_node, "city").text = recipient_address.city or ""

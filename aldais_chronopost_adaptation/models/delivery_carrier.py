@@ -103,6 +103,24 @@ class DeliveryCarrier(models.Model):
         help="Adresse à laquelle Chronopost doit livrer les retours 2Shop Retour / 2Shop Retour Europe "
              "(recipientValue de l'étiquette de retour). Si non renseigné, l'adresse de l'entrepôt est utilisée.",
     )
+    chronopost_2shop_account_number = fields.Char(
+        string="N° de compte Chronopost 2Shop",
+        help="À renseigner uniquement si ce contrat 2Shop utilise des identifiants Chronopost différents "
+             "du contrat standard (champ Compte Société > Chronopost). Laisser vide pour réutiliser les "
+             "identifiants de la société.",
+    )
+    chronopost_2shop_password = fields.Char(
+        string="Mot de passe Chronopost 2Shop",
+        help="Idem chronopost_2shop_account_number : laisser vide pour réutiliser le mot de passe société.",
+    )
+
+    def _chronopost_2shop_account_number(self):
+        self.ensure_one()
+        return self.chronopost_2shop_account_number or self.company_id.chronopost_account_number
+
+    def _chronopost_2shop_password(self):
+        self.ensure_one()
+        return self.chronopost_2shop_password or self.company_id.chronopost_password
 
     # ------------------------------------------------------------------
     # Bascule du flux d'envoi standard vers le générateur 2Shop
@@ -150,7 +168,7 @@ class DeliveryCarrier(models.Model):
 
         vals = {
             "header": {
-                "accountNumber": self.company_id.chronopost_account_number,
+                "accountNumber": self._chronopost_2shop_account_number(),
                 "idEmit": "CHRFR",
             },
             "shipper": {
@@ -203,7 +221,7 @@ class DeliveryCarrier(models.Model):
                 "withReservation": self.chronopost_with_reservation,
             },
             "top": {
-                "password": self.company_id.chronopost_password,
+                "password": self._chronopost_2shop_password(),
                 "modeRetour": self.chronopost_mode_retour,
                 "numberOfParcel": str(picking.chronopost_number_of_parcel or 1),
                 "version": "2.0",
