@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="chronopost_2shop_sale_order_view" model="ir.ui.view">
+        <field name="name">sale.order.chronopost.2shop</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="chronopost_shipping_integration.chronopost_shipping_sale_order_view"/>
+        <field name="arch" type="xml">
+            <group>
+                <field name="chronopost_set_pickup_point_id" position="before">
+                    <button type="action"
+                            name="%(aldais_chronopost_adaptation.chronopost_return_label_wizard_action)d"
+                            string="Générer une étiquette de retour Chronopost"
+                            class="btn-secondary"
+                            invisible="not carrier_id or carrier_id.chronopost_product_code not in ('5Y', '6C')"
+                            context="{'default_sale_order_id': id, 'default_partner_id': partner_id, 'default_carrier_id': carrier_id}"/>
+                </field>
+            </group>
+        </field>
+    </record>
+</odoo>
