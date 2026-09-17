@@ -85,3 +85,17 @@ class IntegrationSaleOrderFactory(models.TransientModel):
                 metafield_value = True if metafield_value == 'true' else False
 
             vals[mapping.odoo_field_id.name] = metafield_value
+
+    def _post_create_order(self, order, order_data):
+        """
+        By the time super() returns, the base Shopify factory has already applied the
+        generic order metafield mappings (`order_metafield_mapping_ids`), so
+        `order.shopify_chronopost_relay_id` is populated if the "order.chronopost-relay-id"
+        mapping is configured. We can now try to resolve the actual pickup point.
+        """
+        order = super()._post_create_order(order, order_data)
+
+        if self.integration_id.is_integration_shopify:
+            order._resolve_shopify_chronopost_pickup_point()
+
+        return order
