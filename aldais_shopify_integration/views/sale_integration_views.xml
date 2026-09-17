@@ -2,6 +2,42 @@
 <odoo>
     <data>
 
+        <record id="view_sale_integration_form_order_metafields_freeform" model="ir.ui.view">
+            <field name="name">sale.integration.form.order.metafields.freeform</field>
+            <field name="model">sale.integration</field>
+            <field name="inherit_id" ref="integration_shopify.view_sale_integration_form"/>
+            <field name="arch" type="xml">
+                <!--
+                    Some Shopify apps (e.g. the Chronopost/2Shop pickup point app) write order
+                    metafields directly through the API without ever registering a metafield
+                    definition. Odoo's "Update Metafields" discovery only lists definitions, so
+                    such metafields never appear in the metafield_id dropdown (which is
+                    no_create). Relax it here so a row can be typed by hand, the same way it
+                    already is for order-line custom attributes below.
+                -->
+                <field name="order_metafield_mapping_ids" position="before">
+                    <p>
+                        Metafields set by an app without a registered definition (e.g. Chronopost
+                        pickup point apps) never show up via "Update Metafields" above. For those,
+                        add a row below and type the exact namespace/key used in Shopify.
+                    </p>
+                </field>
+                <xpath expr="//field[@name='order_metafield_mapping_ids']/tree/field[@name='metafield_id']"
+                       position="attributes">
+                    <attribute name="options">{'no_open': True}</attribute>
+                    <attribute name="context">{
+                        'default_type': 'order',
+                        'default_integration_id': integration_id,
+                        'default_metafield_type': 'single_line_text_field',
+                    }</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_metafield_mapping_ids']/tree/field[@name='metafield_key']"
+                       position="before">
+                    <field name="metafield_namespace"/>
+                </xpath>
+            </field>
+        </record>
+
         <record id="view_sale_integration_form_order_line_metafields" model="ir.ui.view">
             <field name="name">sale.integration.form.order.line.metafields</field>
             <field name="model">sale.integration</field>
