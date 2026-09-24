@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_aldais_shopify" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.aldais.shopify</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="110"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Aldais Shopify" string="Aldais Shopify" name="aldais_shopify_integration"
+                     logo="/integration_shopify/static/description/icon.png"
+                     groups="integration.group_integration_manager">
+                    <block title="Customers" name="aldais_shopify_customers">
+                        <setting id="aldais_shopify_new_partner_tag"
+                                 string="Tag for New Customers"
+                                 help="Tag set on the customers created by the Shopify connector, instead of &quot;Integration / &lt;integration name&gt;&quot;.">
+                            <field name="aldais_shopify_new_partner_tag_id"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
