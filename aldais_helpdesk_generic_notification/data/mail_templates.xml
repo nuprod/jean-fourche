@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Corps générique remplaçant le contenu des messages dans les mails envoyés aux clients -->
+    <template id="ticket_generic_notification_body" name="Helpdesk: corps générique des notifications client">
+        <div style="font-size: 13px;">
+            <p>Bonjour,</p>
+            <p>
+                Vous avez une nouvelle réponse sur votre ticket
+                <strong t-out="record.display_name"/>.
+            </p>
+            <t t-if="has_button_access">
+                <p>Pour la lire et y répondre, cliquez sur le bouton ci-dessous :</p>
+                <p style="margin: 16px 0;">
+                    <a t-att-href="button_access['url']"
+                       t-attf-style="display: inline-block; padding: 8px 16px; border-radius: 3px; color: #ffffff; text-decoration: none; background-color: {{ company.email_secondary_color or '#875A7B' }};"
+                       t-out="button_access['title']"/>
+                </p>
+            </t>
+            <p t-else="">Pour la lire et y répondre, connectez-vous à votre espace client.</p>
+            <p>Merci de répondre depuis le ticket plutôt qu'en répondant à cet e-mail.</p>
+        </div>
+    </template>
+</odoo>
