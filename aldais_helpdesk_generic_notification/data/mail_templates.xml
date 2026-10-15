@@ -8,7 +8,7 @@
                 Vous avez une nouvelle réponse sur votre ticket
                 <strong t-out="record.display_name"/>.
             </p>
-            <t t-if="has_button_access">
+            <t t-if="show_body_button">
                 <p>Pour la lire et y répondre, cliquez sur le bouton ci-dessous :</p>
                 <p style="margin: 16px 0;">
                     <a t-att-href="button_access['url']"
@@ -16,6 +16,10 @@
                        t-out="button_access['title']"/>
                 </p>
             </t>
+            <p t-elif="has_button_access">
+                Pour la lire et y répondre, cliquez sur le bouton
+                « <t t-out="button_access['title']"/> » ci-dessus.
+            </p>
             <p t-else="">Pour la lire et y répondre, connectez-vous à votre espace client.</p>
             <p>Merci de répondre depuis le ticket plutôt qu'en répondant à cet e-mail.</p>
         </div>

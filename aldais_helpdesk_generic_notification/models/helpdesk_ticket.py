@@ -38,7 +38,7 @@ class HelpdeskTicket(models.Model):
                 **render_values,
                 **recipients_group,
                 # le layout standard affiche déjà le bouton d'accès en en-tête
-                'has_button_access': recipients_group.get('has_button_access')
+                'show_body_button': recipients_group.get('has_button_access')
                 and bool(email_layout_xmlid) and email_layout_xmlid != 'mail.mail_notification_layout',
             },
             minimal_qcontext=True,
