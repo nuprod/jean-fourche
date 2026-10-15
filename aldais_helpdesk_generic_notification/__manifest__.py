@@ -10,7 +10,7 @@
     'author': 'Aldais',
     'category': 'Custom',
     'version': '17.0.1.0.0',
-    'depends': ['helpdesk'],
+    'depends': ['helpdesk', 'mail'],
     'data': [
         'data/mail_templates.xml',
     ],
