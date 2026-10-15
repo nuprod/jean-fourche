@@ -39,7 +39,7 @@ class HelpdeskTicket(models.Model):
                 **recipients_group,
                 # le layout standard affiche déjà le bouton d'accès en en-tête
                 'has_button_access': recipients_group.get('has_button_access')
-                and email_layout_xmlid not in (False, 'mail.mail_notification_layout'),
+                and bool(email_layout_xmlid) and email_layout_xmlid != 'mail.mail_notification_layout',
             },
             minimal_qcontext=True,
             lang=render_values.get('lang', self.env.lang),
@@ -60,5 +60,5 @@ class HelpdeskTicket(models.Model):
             recipient_ids, mail_values, additional_values=additional_values,
         )
         if self._has_external_recipients(recipient_ids):
-            values.pop('attachment_ids', None)
+            values['send_without_attachments'] = True
         return values
